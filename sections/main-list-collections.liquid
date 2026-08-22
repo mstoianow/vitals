@@ -1,0 +1,116 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="section-header">
+      <h1 class="h1">{{ page_title }}</h1>
+    </div>
+
+    <div class="collection-list" style="--grid-columns: {{ section.settings.columns_desktop }};">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="collection-card">
+          <div class="media media--{{ section.settings.image_ratio }}">
+            {%- if collection.featured_image -%}
+              {{
+                collection.featured_image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 33vw, 100vw',
+                  widths: '300, 500, 800',
+                  alt: collection.title
+              }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="collection-card__info">
+            <h2 class="h4">{{ collection.title | escape }}</h2>
+            <span class="text-small text-muted">
+              {{- 'products.facets.product_count' | t: count: collection.products_count -}}
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 1.5rem;
+  }
+
+  .collection-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    text-decoration: none;
+  }
+
+  .collection-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-list {
+      grid-template-columns: repeat(var(--grid-columns, 3), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

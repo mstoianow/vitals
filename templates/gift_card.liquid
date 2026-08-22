@@ -1,0 +1,59 @@
+{%- liquid
+  assign gift_card_value = gift_card.initial_value | money
+  assign gift_card_balance = gift_card.balance | money
+  assign gift_card_expiry = gift_card.expires_on | date: '%d %B %Y'
+-%}
+
+<div class="section">
+  <div class="page-width page-width--narrow">
+    <div class="gift-card">
+      <h1 class="h2">{{ 'gift_cards.issued.title' | t: value: gift_card_value, shop: shop.name }}</h1>
+      <p class="text-muted">{{ 'gift_cards.issued.subtext' | t }}</p>
+
+      <div class="gift-card__code card">
+        <span class="gift-card__code-value">{{ gift_card.code | format_code }}</span>
+      </div>
+
+      {%- if gift_card.expired -%}
+        <p class="form__message form__message--error">{{ 'gift_cards.issued.expired' | t }}</p>
+      {%- elsif gift_card.expires_on -%}
+        <p class="text-small text-muted">{{ 'gift_cards.issued.expires_on' | t: expiry: gift_card_expiry }}</p>
+      {%- endif -%}
+
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        <p class="text-small text-muted">{{ 'gift_cards.issued.remaining' | t: balance: gift_card_balance }}</p>
+      {%- endif -%}
+
+      <div class="gift-card__actions">
+        <a href="{{ shop.url }}" class="button button--primary">{{ 'gift_cards.issued.shop_link' | t }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gift-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .gift-card__code {
+    width: 100%;
+    padding: 1.5rem;
+    border-style: dashed;
+  }
+
+  .gift-card__code-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    word-break: break-all;
+  }
+
+  .gift-card__actions {
+    margin-top: 0.5rem;
+  }
+</style>

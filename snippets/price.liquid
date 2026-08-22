@@ -1,0 +1,41 @@
+{% doc %}
+  Renders a price with compare-at price, sale badge and unit price support.
+
+  @param {object} product - The product to price
+  @param {object} [variant] - A specific variant. Defaults to the product's selected or first available variant.
+  @param {boolean} [large] - Renders the larger product page size
+  @param {boolean} [show_from] - Prefixes with "From" when the product has a price range
+
+  @example
+  {% render 'price', product: product, show_from: true %}
+{% enddoc %}
+
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign price = target.price | default: product.price
+  assign compare_at = target.compare_at_price | default: product.compare_at_price
+  assign price_classes = 'price'
+  if large
+    assign price_classes = price_classes | append: ' price--large'
+  endif
+-%}
+
+<div class="{{ price_classes }}">
+  {%- if show_from and product.price_varies -%}
+    {%- assign from_price = product.price | money -%}
+    <span>{{ 'products.product.from_price' | t: price: from_price }}</span>
+  {%- else -%}
+    <span>{{ price | money }}</span>
+  {%- endif -%}
+
+  {%- if compare_at > price -%}
+    <s class="price__compare">{{ compare_at | money }}</s>
+    <span class="visually-hidden">{{ 'products.product.on_sale' | t }}</span>
+  {%- endif -%}
+
+  {%- if target.unit_price_measurement -%}
+    <span class="price__unit">
+      {{- target.unit_price | money }} / {{ target.unit_price_measurement.reference_value }}{{ target.unit_price_measurement.reference_unit -}}
+    </span>
+  {%- endif -%}
+</div>

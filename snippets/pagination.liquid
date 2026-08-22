@@ -1,0 +1,44 @@
+{% doc %}
+  Renders pagination controls for a paginated collection, blog or search result.
+
+  @param {object} paginate - The paginate object from inside a {% paginate %} tag
+
+  @example
+  {% paginate collection.products by 12 %}
+    {% render 'pagination', paginate: paginate %}
+  {% endpaginate %}
+{% enddoc %}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}">
+    {%- if paginate.previous -%}
+      <a
+        href="{{ paginate.previous.url }}"
+        class="pagination__item"
+        aria-label="{{ 'general.pagination.previous' | t }}"
+      >
+        {% render 'icon', name: 'chevron-left', size: 18 %}
+      </a>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a>
+      {%- elsif part.title == paginate.current_page -%}
+        <span class="pagination__item pagination__item--current" aria-current="page">{{ part.title }}</span>
+      {%- else -%}
+        <span class="pagination__item text-muted">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <a
+        href="{{ paginate.next.url }}"
+        class="pagination__item"
+        aria-label="{{ 'general.pagination.next' | t }}"
+      >
+        {% render 'icon', name: 'chevron-right', size: 18 %}
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

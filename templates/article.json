@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_date": true,
+        "show_author": true,
+        "padding_block": 56
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "scheme-5",
+        "heading": "Join the list",
+        "text": "<p>Research summaries, restock alerts and subscriber-only pricing. Roughly once a fortnight.</p>",
+        "button_label": "Subscribe",
+        "disclaimer": "Unsubscribe any time. We never share your details.",
+        "padding_block": 72
+      }
+    }
+  },
+  "order": ["main", "newsletter"]
+}

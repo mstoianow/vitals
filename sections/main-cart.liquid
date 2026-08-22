@@ -1,0 +1,324 @@
+{%- liquid
+  assign threshold = settings.cart_free_shipping_threshold | times: 100
+  assign remaining = threshold | minus: cart.total_price
+  assign progress = 0
+  if threshold > 0
+    assign progress = cart.total_price | times: 100 | divided_by: threshold
+    if progress > 100
+      assign progress = 100
+    endif
+  endif
+-%}
+
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <h1 class="cart__title h1">{{ 'cart.title' | t }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="empty-state">
+        <h2 class="h3">{{ 'cart.empty' | t }}</h2>
+        <p class="text-muted">{{ 'cart.empty_message' | t }}</p>
+        <div class="empty-state__actions">
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+            {{- 'general.continue_shopping' | t -}}
+          </a>
+        </div>
+      </div>
+    {%- else -%}
+      {%- if settings.cart_show_free_shipping_bar and threshold > 0 -%}
+        <div class="cart__shipping-bar" style="--progress: {{ progress }}%;">
+          <p class="cart__shipping-text text-small">
+            {%- if remaining > 0 -%}
+              {%- assign remaining_formatted = remaining | money -%}
+              {{ 'cart.free_shipping_progress' | t: amount: remaining_formatted }}
+            {%- else -%}
+              {% render 'icon', name: 'check', size: 16 %}
+              {{ 'cart.free_shipping_reached' | t }}
+            {%- endif -%}
+          </p>
+          <div class="cart__shipping-track">
+            <div class="cart__shipping-fill"></div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- form 'cart', cart, class: 'cart__form' -%}
+        <table class="cart__table">
+          <thead class="visually-hidden">
+            <tr>
+              <th scope="col">{{ 'cart.product' | t }}</th>
+              <th scope="col">{{ 'cart.quantity' | t }}</th>
+              <th scope="col">{{ 'cart.total' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for line_item in cart.items -%}
+              <tr class="cart__row">
+                <td class="cart__cell cart__cell--product">
+                  <a href="{{ line_item.url }}" class="cart__image media media--square">
+                    {%- if line_item.image -%}
+                      {{
+                        line_item.image
+                        | image_url: width: 200
+                        | image_tag: loading: 'lazy', widths: '100, 200', alt: line_item.title
+                      }}
+                    {%- endif -%}
+                  </a>
+                  <div class="cart__info">
+                    <a href="{{ line_item.url }}" class="cart__product-title">{{ line_item.product.title | escape }}</a>
+                    {%- unless line_item.product.has_only_default_variant -%}
+                      <p class="text-small text-muted">{{ line_item.variant.title }}</p>
+                    {%- endunless -%}
+                    {%- if line_item.selling_plan_allocation -%}
+                      <p class="text-small text-muted">{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
+                    {%- endif -%}
+                    <p class="cart__unit-price text-small">{{ line_item.original_price | money }}</p>
+                  </div>
+                </td>
+
+                <td class="cart__cell cart__cell--quantity">
+                  <label class="visually-hidden" for="Quantity-{{ line_item.index | plus: 1 }}">
+                    {{- 'cart.quantity' | t -}}
+                  </label>
+                  <input
+                    type="number"
+                    id="Quantity-{{ line_item.index | plus: 1 }}"
+                    name="updates[]"
+                    class="field__input cart__quantity-input"
+                    value="{{ line_item.quantity }}"
+                    min="0"
+                    step="1"
+                  >
+                  <a
+                    href="{{ line_item.url_to_remove }}"
+                    class="cart__remove text-small"
+                    aria-label="{{ 'cart.remove' | t: title: line_item.title }}"
+                  >
+                    {{- 'cart.remove' | t: title: line_item.title -}}
+                  </a>
+                </td>
+
+                <td class="cart__cell cart__cell--total">
+                  {%- if line_item.original_line_price > line_item.final_line_price -%}
+                    <span class="price__compare">
+                      <s>{{ line_item.original_line_price | money }}</s>
+                    </span>
+                  {%- endif -%}
+                  <span class="cart__line-total">{{ line_item.final_line_price | money }}</span>
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        {%- if settings.cart_show_note -%}
+          <div class="cart__note field">
+            <label class="field__label" for="CartNote">{{ 'cart.note' | t }}</label>
+            <textarea
+              id="CartNote"
+              name="note"
+              class="field__input"
+              placeholder="{{ 'cart.note_placeholder' | t }}"
+            >{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        <div class="cart__footer">
+          <div class="cart__totals">
+            <div class="cart__subtotal">
+              <span>{{ 'cart.subtotal' | t }}</span>
+              <span class="cart__subtotal-value">{{ cart.total_price | money_with_currency }}</span>
+            </div>
+            <p class="text-small text-muted">{{ 'cart.taxes_and_shipping' | t }}</p>
+          </div>
+
+          <div class="cart__actions">
+            <button type="submit" name="update" class="button button--secondary">
+              {{- 'cart.update' | t -}}
+            </button>
+            <button type="submit" name="checkout" class="button button--primary">
+              {{- 'cart.checkout' | t -}}
+            </button>
+          </div>
+        </div>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .cart__title {
+    margin-bottom: 2rem;
+  }
+
+  .cart__shipping-bar {
+    max-width: 32rem;
+    margin-bottom: 2rem;
+  }
+
+  .cart__shipping-text {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart__shipping-track {
+    height: 6px;
+    overflow: hidden;
+    background-color: rgb(var(--color-text) / 0.1);
+    border-radius: 999px;
+  }
+
+  .cart__shipping-fill {
+    width: var(--progress, 0%);
+    height: 100%;
+    background-color: rgb(var(--color-accent));
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  .cart__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .cart__row {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .cart__cell {
+    padding-block: 1.25rem;
+    vertical-align: top;
+  }
+
+  .cart__cell--product {
+    display: flex;
+    gap: 1rem;
+    padding-right: 1rem;
+  }
+
+  .cart__image {
+    flex-shrink: 0;
+    width: 5rem;
+  }
+
+  .cart__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cart__product-title {
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cart__unit-price {
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  .cart__cell--quantity {
+    width: 7rem;
+  }
+
+  .cart__quantity-input {
+    width: 5rem;
+    text-align: center;
+  }
+
+  .cart__remove {
+    display: inline-block;
+    margin-top: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .cart__cell--total {
+    width: 8rem;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .cart__note {
+    max-width: 32rem;
+    margin-top: 2rem;
+  }
+
+  .cart__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .cart__totals {
+    text-align: right;
+  }
+
+  .cart__subtotal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .cart__totals p {
+    margin-top: 0.35rem;
+  }
+
+  .cart__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart__row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 1rem;
+    }
+
+    .cart__cell {
+      padding-block: 1rem 0;
+    }
+
+    .cart__cell--product {
+      grid-column: 1 / -1;
+    }
+
+    .cart__cell--total {
+      padding-bottom: 1rem;
+      text-align: right;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

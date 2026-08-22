@@ -1,0 +1,125 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity": true,
+            "show_dynamic_checkout": true
+          }
+        },
+        "trust_badges": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_1": "Third-party tested",
+            "badge_1_icon": "beaker",
+            "badge_2": "Free UK delivery over £50",
+            "badge_2_icon": "truck",
+            "badge_3": "Vegan and allergen free",
+            "badge_3_icon": "leaf"
+          }
+        },
+        "supplement_facts": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Supplement facts",
+            "content": "<p>Add the full ingredient breakdown for this product, including amounts per serving and the reference intake percentage where one exists.</p>"
+          }
+        },
+        "how_to_use": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to use",
+            "content": "<p>Take two capsules daily with food. Do not exceed the recommended dose. Food supplements should not be used as a substitute for a varied diet.</p>"
+          }
+        },
+        "delivery": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Delivery and returns",
+            "content": "<p>Free UK delivery on orders over £50, dispatched within one working day. Not right for you? Return within 30 days for a full refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "description",
+        "variant_picker",
+        "buy_buttons",
+        "trust_badges",
+        "supplement_facts",
+        "how_to_use",
+        "delivery"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "padding_block": 48
+      }
+    },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "heading": "Pairs well with",
+        "text_alignment": "center",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "padding_block": 72
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "when": {
+          "type": "question",
+          "settings": {
+            "question": "When should I take this?",
+            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+          }
+        },
+        "results": {
+          "type": "question",
+          "settings": {
+            "question": "How do I read the test results?",
+            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+          }
+        }
+      },
+      "block_order": ["when", "results"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "Questions about this product",
+        "padding_block": 72
+      }
+    }
+  },
+  "order": ["main", "related", "faq"]
+}

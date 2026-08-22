@@ -1,0 +1,229 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "height": "large",
+        "overlay_opacity": 35,
+        "color_scheme": "scheme-4",
+        "eyebrow": "Third-party tested",
+        "heading": "Everything you need. Nothing you do not.",
+        "text": "<p>Clinically studied doses, transparent labels and batch-level test results you can actually read.</p>",
+        "content_width": 620,
+        "content_position": "left",
+        "text_alignment": "left",
+        "button_label": "Shop the range",
+        "button_2_label": "See the test results"
+      }
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "tested": {
+          "type": "benefit",
+          "settings": {
+            "icon": "beaker",
+            "heading": "Third-party tested",
+            "text": "<p>Every batch independently tested for purity and potency, with results published openly.</p>"
+          }
+        },
+        "dosed": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield-check",
+            "heading": "Clinically studied doses",
+            "text": "<p>We dose to the research, not to the cost sheet. No proprietary blends, no fairy dust.</p>"
+          }
+        },
+        "clean": {
+          "type": "benefit",
+          "settings": {
+            "icon": "leaf",
+            "heading": "Clean formulations",
+            "text": "<p>Vegan, allergen free and made without artificial colours, sweeteners or fillers.</p>"
+          }
+        }
+      },
+      "block_order": ["tested", "dosed", "clean"],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "layout": "stacked",
+        "padding_block": 56
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "eyebrow": "Start here",
+        "heading": "Best sellers",
+        "text_alignment": "center",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "padding_block": 72
+      }
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "image_position": "left",
+        "image_ratio": "landscape",
+        "eyebrow": "Why we exist",
+        "heading": "Made for people who read the label",
+        "text": "<p>We started because the supplements aisle is full of underdosed formulas hiding behind proprietary blends. Every product we make lists its actives in full, at doses backed by published research, and every batch is tested by an independent lab before it ships.</p>",
+        "button_label": "Read our standard",
+        "padding_block": 72
+      }
+    },
+    "ingredients": {
+      "type": "ingredients",
+      "blocks": {
+        "d3": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamin D3 (cholecalciferol)",
+            "amount": "4000 IU",
+            "description": "Supports normal immune function and the maintenance of bones and teeth."
+          }
+        },
+        "magnesium": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Magnesium bisglycinate",
+            "amount": "300 mg",
+            "description": "A highly absorbable form that supports muscle function and normal sleep."
+          }
+        },
+        "k2": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamin K2 (MK-7)",
+            "amount": "100 mcg",
+            "description": "Works alongside vitamin D to direct calcium towards bone."
+          }
+        },
+        "zinc": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Zinc bisglycinate",
+            "amount": "15 mg",
+            "description": "Contributes to normal immune function and protection of cells from oxidative stress."
+          }
+        }
+      },
+      "block_order": ["d3", "magnesium", "k2", "zinc"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "eyebrow": "What is inside",
+        "heading": "Every active, every dose",
+        "text": "<p>No proprietary blends. Here is exactly what is in each serving and why it is there.</p>",
+        "footnote": "Amounts shown per daily serving of two capsules.",
+        "padding_block": 72
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "one": {
+          "type": "testimonial",
+          "settings": {
+            "rating": "5",
+            "quote": "The only brand I have found that publishes its actual test results. Six months in and I am not switching.",
+            "author": "Alex T.",
+            "verified": true
+          }
+        },
+        "two": {
+          "type": "testimonial",
+          "settings": {
+            "rating": "5",
+            "quote": "Magnesium that actually absorbs. Sleep improved within a fortnight and the label tells you exactly why.",
+            "author": "Priya S.",
+            "verified": true
+          }
+        },
+        "three": {
+          "type": "testimonial",
+          "settings": {
+            "rating": "5",
+            "quote": "Straightforward dosing, no filler ingredients, and delivery has been quick every single time.",
+            "author": "Daniel M.",
+            "verified": true
+          }
+        }
+      },
+      "block_order": ["one", "two", "three"],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "eyebrow": "Reviews",
+        "heading": "What customers say",
+        "columns_desktop": 3,
+        "padding_block": 72
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "when": {
+          "type": "question",
+          "settings": {
+            "question": "When should I take this?",
+            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+          }
+        },
+        "results": {
+          "type": "question",
+          "settings": {
+            "question": "How do I read the test results?",
+            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+          }
+        },
+        "stacking": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take more than one product together?",
+            "answer": "<p>Yes. The range is designed to stack without overlapping doses. If you take prescription medication, speak to your GP or pharmacist first.</p>"
+          }
+        },
+        "returns": {
+          "type": "question",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>If it is not right for you, contact us within 30 days for a full refund, opened or not.</p>"
+          }
+        }
+      },
+      "block_order": ["when", "results", "stacking", "returns"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "Frequently asked questions",
+        "padding_block": 72
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "scheme-5",
+        "heading": "Join the list",
+        "text": "<p>Research summaries, restock alerts and subscriber-only pricing. Roughly once a fortnight.</p>",
+        "button_label": "Subscribe",
+        "disclaimer": "Unsubscribe any time. We never share your details.",
+        "padding_block": 80
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "benefits",
+    "featured",
+    "story",
+    "ingredients",
+    "testimonials",
+    "faq",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,207 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    {%- if section.settings.show_banner -%}
+      <div class="collection-banner">
+        <h1 class="collection-banner__title h1">{{ collection.title | escape }}</h1>
+        {%- if section.settings.show_description and collection.description != blank -%}
+          <div class="collection-banner__description rte text-muted">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="collection-toolbar">
+      <p class="collection-toolbar__count text-small text-muted">
+        {{ 'products.facets.product_count' | t: count: collection.products_count }}
+      </p>
+
+      {%- if section.settings.show_sorting -%}
+        <form method="get" class="collection-toolbar__sort" data-sort-form>
+          <label class="visually-hidden" for="SortBy">{{ 'products.facets.sort_by' | t }}</label>
+          <div class="select">
+            <select id="SortBy" name="sort_by" class="select__select" data-sort-select>
+              {%- for option in collection.sort_options -%}
+                <option
+                  value="{{ option.value }}"
+                  {% if option.value == collection.sort_by %}
+                    selected
+                  {% endif %}
+                >
+                  {{ option.name }}
+                </option>
+              {%- endfor -%}
+            </select>
+            <span class="select__icon">{% render 'icon', name: 'chevron-down', size: 16 %}</span>
+          </div>
+          <button type="submit" class="button button--secondary" data-sort-submit>
+            {{- 'products.facets.apply' | t -}}
+          </button>
+        </form>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div
+          class="product-grid"
+          style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};"
+        >
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product, eager: forloop.first %}
+          {%- endfor -%}
+        </div>
+
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <div class="empty-state">
+          <h2 class="h3">{{ 'templates.collection.empty' | t }}</h2>
+          <p class="text-muted">{{ 'templates.collection.empty_message' | t }}</p>
+          <div class="empty-state__actions">
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+              {{- 'general.continue_shopping' | t -}}
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-banner {
+    max-width: 60ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .collection-banner__description {
+    margin-top: 0.75rem;
+  }
+
+  .collection-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .collection-toolbar__count {
+    margin: 0;
+  }
+
+  .collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .collection-toolbar__sort .select__select {
+    min-height: 2.75rem;
+    min-width: 12rem;
+  }
+
+  .collection-toolbar__sort .button {
+    min-height: 2.75rem;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  function initCollectionSort() {
+    document.querySelectorAll('[data-sort-form]').forEach((form) => {
+      const submit = form.querySelector('[data-sort-submit]');
+      const select = form.querySelector('[data-sort-select]');
+      if (!submit || !select || form.dataset.sortReady === 'true') return;
+
+      form.dataset.sortReady = 'true';
+      submit.hidden = true;
+      select.addEventListener('change', () => form.submit());
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCollectionSort);
+  } else {
+    initCollectionSort();
+  }
+
+  document.addEventListener('shopify:section:load', initCollectionSort);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sorting",
+      "label": "Show sorting",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Products per page",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

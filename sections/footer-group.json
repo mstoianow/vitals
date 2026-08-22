@@ -1,0 +1,45 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "brand": {
+          "type": "brand",
+          "settings": {
+            "logo_width": 150,
+            "text": "<p>Third-party tested supplements, formulated with clinically studied doses and nothing you do not need.</p>"
+          }
+        },
+        "menu-shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "menu-help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Join the list",
+            "text": "<p>Research summaries, restock alerts and subscriber-only pricing. No noise.</p>"
+          }
+        }
+      },
+      "block_order": ["brand", "menu-shop", "menu-help", "newsletter"],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": ["footer"]
+}

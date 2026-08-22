@@ -1,0 +1,137 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="search-header">
+      <h1 class="h1">{{ 'templates.search.title' | t }}</h1>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+        <label class="visually-hidden" for="SearchPage">{{ 'general.search.title' | t }}</label>
+        <input
+          type="search"
+          id="SearchPage"
+          name="q"
+          value="{{ search.terms | escape }}"
+          class="field__input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+        >
+        <button type="submit" class="button button--primary">{{ 'general.search.submit' | t }}</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="search-count text-small text-muted">
+          {{ 'general.search.results_count' | t: count: search.results_count }}
+        </p>
+
+        {%- paginate search.results by section.settings.results_per_page -%}
+          <div
+            class="product-grid"
+            style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-mobile: 2;"
+          >
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {% render 'product-card', product: item, eager: forloop.first %}
+              {%- else -%}
+                <div class="search-result card">
+                  <h2 class="h4">
+                    <a href="{{ item.url }}">{{ item.title | escape }}</a>
+                  </h2>
+                  <p class="text-small text-muted">{{ item.content | strip_html | truncate: 140 }}</p>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {% render 'pagination', paginate: paginate %}
+        {%- endpaginate -%}
+      {%- else -%}
+        <div class="empty-state">
+          <p>{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+          <div class="empty-state__actions">
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+              {{- 'general.continue_shopping' | t -}}
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .search-header {
+    max-width: 40rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .search-form .field__input {
+    flex: 1;
+  }
+
+  .search-count {
+    margin-bottom: 1.5rem;
+  }
+
+  .search-result {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-result a {
+    text-decoration: none;
+  }
+
+  .search-result p {
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Search results",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Results per page",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

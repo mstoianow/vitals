@@ -1,0 +1,98 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <article class="page-width page-width--narrow article">
+    <header class="article__header">
+      {%- if section.settings.show_date -%}
+        <span class="eyebrow">{{ article.published_at | date: '%d %B %Y' }}</span>
+      {%- endif -%}
+
+      <h1 class="h1">{{ article.title | escape }}</h1>
+
+      {%- if section.settings.show_author and article.author != blank -%}
+        <p class="text-small text-muted">{{ 'blogs.article.written_by' | t: author: article.author }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image -%}
+      <div class="article__image media media--landscape">
+        {{
+          article.image
+          | image_url: width: 1400
+          | image_tag: loading: 'eager', sizes: '(min-width: 750px) 780px, 100vw', widths: '400, 780, 1100, 1400', alt: article.image.alt
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="article__content rte">{{ article.content }}</div>
+
+    <footer class="article__footer">
+      <a href="{{ blog.url }}" class="button button--secondary">
+        {{- 'blogs.article.back_to_blog' | t: title: blog.title -}}
+      </a>
+    </footer>
+  </article>
+</div>
+
+{% stylesheet %}
+  .article__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .article__image {
+    margin-bottom: 2.5rem;
+  }
+
+  .article__content > * + * {
+    margin-top: 1.1em;
+  }
+
+  .article__content h2,
+  .article__content h3 {
+    margin-top: 2.25rem;
+  }
+
+  .article__footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 56
+    }
+  ]
+}
+{% endschema %}

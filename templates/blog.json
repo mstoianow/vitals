@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_date": true,
+        "show_excerpt": true,
+        "posts_per_page": 12,
+        "columns_desktop": 3,
+        "padding_block": 48
+      }
+    }
+  },
+  "order": ["main"]
+}

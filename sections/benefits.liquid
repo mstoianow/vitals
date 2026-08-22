@@ -1,0 +1,225 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-header section-header--center">
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}
+          <div class="section-header__text rte text-muted">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="benefits" style="--grid-columns: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        <li class="benefits__item benefits__item--{{ section.settings.layout }}" {{ block.shopify_attributes }}>
+          <span class="benefits__icon">
+            {% render 'icon', name: block.settings.icon, size: 26 %}
+          </span>
+          <div class="benefits__body">
+            {%- if block.settings.heading != blank -%}
+              <h3 class="benefits__heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="benefits__text rte text-muted">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .benefits {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 1.5rem;
+  }
+
+  .benefits__item {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .benefits__item--stacked {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.85rem;
+  }
+
+  .benefits__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 50%;
+    color: rgb(var(--color-accent));
+  }
+
+  .benefits__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .benefits__heading {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .benefits__text {
+    font-size: 0.9375rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .benefits {
+      grid-template-columns: repeat(var(--grid-columns, 3), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Benefits",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Icon above text"
+        },
+        {
+          "value": "inline",
+          "label": "Icon beside text"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "beaker",
+              "label": "Beaker"
+            },
+            {
+              "value": "shield-check",
+              "label": "Shield"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "truck",
+              "label": "Delivery"
+            },
+            {
+              "value": "recycle",
+              "label": "Recycle"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
+          ],
+          "default": "beaker"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Third-party tested"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Every batch is independently tested for purity and potency. Results are published on the product page.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "beaker",
+            "heading": "Third-party tested",
+            "text": "<p>Every batch independently tested for purity and potency, with results published openly.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield-check",
+            "heading": "Clinically studied doses",
+            "text": "<p>We dose to the research, not to the cost sheet. No proprietary blends, no fairy dust.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "leaf",
+            "heading": "Clean formulations",
+            "text": "<p>Vegan, allergen free and made without artificial colours, sweeteners or fillers.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

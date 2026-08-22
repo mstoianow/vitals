@@ -1,0 +1,179 @@
+{%- liquid
+  assign target = section.settings.collection
+  assign products_to_show = section.settings.products_to_show
+-%}
+
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="section-header{% if section.settings.text_alignment == 'center' %} section-header--center{% endif %}">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="section-header__text rte text-muted">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if target != blank and target.products.size > 0 -%}
+      <div
+        class="product-grid"
+        style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};"
+      >
+        {%- for product in target.products limit: products_to_show -%}
+          {% render 'product-card', product: product, eager: forloop.first %}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_view_all -%}
+        <div class="featured-collection__footer">
+          <a href="{{ target.url }}" class="button button--secondary">
+            {{- section.settings.view_all_label | default: 'View all' -}}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div
+        class="product-grid"
+        style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};"
+      >
+        {%- for i in (1..products_to_show) -%}
+          <div class="product-card">
+            <div class="media media--{{ settings.card_image_ratio }}">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
+              <div class="price"><span>{{ 2999 | money }}</span></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .featured-collection__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best sellers"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'view all' button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "'View all' button label",
+      "default": "View all"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

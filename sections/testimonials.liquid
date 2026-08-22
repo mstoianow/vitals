@@ -1,0 +1,218 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="section-header section-header--center">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <ul class="testimonials" style="--grid-columns: {{ section.settings.columns_desktop }};">
+      {%- for block in section.blocks -%}
+        <li class="testimonial card" {{ block.shopify_attributes }}>
+          {%- if block.settings.rating != blank -%}
+            {%- assign rating_value = block.settings.rating | times: 1 -%}
+            <div
+              class="testimonial__rating"
+              aria-label="{{ 'accessibility.star_rating' | t: rating: rating_value, max: 5 }}"
+            >
+              {%- for i in (1..5) -%}
+                {%- if i <= rating_value -%}
+                  {% render 'icon', name: 'star', size: 16 %}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.quote != blank -%}
+            <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+          {%- endif -%}
+
+          <div class="testimonial__meta">
+            {%- if block.settings.author != blank -%}
+              <cite class="testimonial__author">{{ block.settings.author }}</cite>
+            {%- endif -%}
+            {%- if block.settings.verified -%}
+              <span class="testimonial__verified text-small">
+                {% render 'icon', name: 'check', size: 14 %}
+                {{ 'sections.testimonials.verified' | t }}
+              </span>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .testimonials {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .testimonial {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .testimonial__rating {
+    display: flex;
+    gap: 0.15rem;
+    color: rgb(var(--color-accent));
+  }
+
+  .testimonial__quote {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  .testimonial__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .testimonial__author {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .testimonial__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    opacity: 0.7;
+  }
+
+  @media screen and (min-width: 750px) {
+    .testimonials {
+      grid-template-columns: repeat(var(--grid-columns, 3), minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What customers say"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "Rating",
+          "options": [
+            {
+              "value": "5",
+              "label": "5 stars"
+            },
+            {
+              "value": "4",
+              "label": "4 stars"
+            },
+            {
+              "value": "3",
+              "label": "3 stars"
+            }
+          ],
+          "default": "5"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "The only brand I have found that publishes its actual test results. Six months in and I am not switching."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Alex T."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show verified buyer label",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Magnesium that actually absorbs. Sleep improved within a fortnight and the label tells you exactly why.",
+            "author": "Priya S."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Straightforward dosing, no filler ingredients, and delivery has been quick every single time.",
+            "author": "Daniel M."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

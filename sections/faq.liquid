@@ -1,0 +1,150 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="faq">
+      <div class="faq__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="h2">{{ section.settings.heading | default: 'Frequently asked questions' }}</h2>
+        {%- if section.settings.text != blank -%}
+          <div class="rte text-muted">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="faq__list">
+        {%- for block in section.blocks -%}
+          <details class="accordion" {{ block.shopify_attributes }}>
+            <summary class="accordion__summary">
+              {{ block.settings.question }}
+              {% render 'icon', name: 'chevron-down', size: 20 %}
+            </summary>
+            <div class="accordion__content rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .faq__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .faq {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 4rem;
+    }
+
+    .faq__header {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "When should I take this?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "When should I take this?",
+            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I read the test results?",
+            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I take more than one product together?",
+            "answer": "<p>Yes. The range is designed to stack without overlapping doses. If you take prescription medication, speak to your GP or pharmacist first.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>If it is not right for you, contact us within 30 days for a full refund, opened or not.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

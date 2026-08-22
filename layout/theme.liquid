@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{- page_title -}}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.pagination.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    {{ settings.type_header_font | font_face: font_display: 'swap' }}
+
+    {% style %}
+      {%- for scheme in settings.color_schemes -%}
+        {%- if forloop.first -%}:root,{%- endif -%}
+        .color-{{ scheme.id }} {
+          --color-background: {{ scheme.settings.background.rgb }};
+          --color-background-gradient: {% if scheme.settings.background_gradient != blank %}{{ scheme.settings.background_gradient }}{% else %}rgb({{ scheme.settings.background.rgb }}){% endif %};
+          --color-text: {{ scheme.settings.text.rgb }};
+          --color-button: {{ scheme.settings.button.rgb }};
+          --color-button-text: {{ scheme.settings.button_label.rgb }};
+          --color-secondary-button-text: {{ scheme.settings.secondary_button_label.rgb }};
+          --color-border: {{ scheme.settings.border.rgb }};
+          --color-accent: {{ scheme.settings.accent.rgb }};
+          --color-shadow: {{ scheme.settings.shadow.rgb }};
+        }
+      {%- endfor -%}
+
+      :root {
+        --page-width: {{ settings.page_width }}px;
+        --spacing-sections: {{ settings.spacing_sections }}px;
+
+        --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --font-body-style: {{ settings.type_body_font.style }};
+        --font-body-weight: {{ settings.type_body_font.weight }};
+        --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 900 }};
+
+        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+        --font-heading-style: {{ settings.type_header_font.style }};
+        --font-heading-weight: {{ settings.type_header_font.weight }};
+        --font-heading-transform: {{ settings.heading_transform }};
+
+        --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+        --font-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+
+        --radius-button: {{ settings.radius_button }}px;
+        --radius-input: {{ settings.radius_input }}px;
+        --radius-card: {{ settings.radius_card }}px;
+      }
+
+      body {
+        background: var(--color-background-gradient);
+        color: rgb(var(--color-text));
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name | handle }}">
+    <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main-content" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+  </body>
+</html>

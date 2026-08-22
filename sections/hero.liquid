@@ -1,0 +1,286 @@
+<div
+  class="hero hero--{{ section.settings.height }} color-{{ section.settings.color_scheme }}"
+  style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --content-max-width: {{ section.settings.content_width }}px;"
+>
+  {%- if section.settings.image != blank -%}
+    <div class="hero__media">
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '600, 900, 1200, 1800, 2400, 3000', alt: section.settings.image.alt
+      }}
+      <div class="hero__overlay"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width hero__inner hero__inner--{{ section.settings.content_position }}">
+    <div class="hero__content hero__content--{{ section.settings.text_alignment }}">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="hero__heading h0">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="hero__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank or section.settings.button_2_label != blank -%}
+        <div class="hero__buttons">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_link }}" class="button button--primary">
+              {{- section.settings.button_label -}}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_2_label != blank -%}
+            <a href="{{ section.settings.button_2_link }}" class="button button--secondary">
+              {{- section.settings.button_2_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--color-background-gradient);
+    color: rgb(var(--color-text));
+  }
+
+  .hero--small {
+    min-height: 42vh;
+  }
+
+  .hero--medium {
+    min-height: 60vh;
+  }
+
+  .hero--large {
+    min-height: 78vh;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(0 0 0 / var(--overlay-opacity, 0.3));
+  }
+
+  .hero__inner {
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding-block: 4rem;
+  }
+
+  .hero__inner--left {
+    justify-content: flex-start;
+  }
+
+  .hero__inner--center {
+    justify-content: center;
+  }
+
+  .hero__inner--right {
+    justify-content: flex-end;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    max-width: var(--content-max-width, 620px);
+  }
+
+  .hero__content--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__content--right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .hero__heading {
+    margin: 0;
+  }
+
+  .hero__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 30
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Third-party tested"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everything you need. Nothing you do not."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Clinically studied doses, transparent labels and batch-level test results you can actually read.</p>"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Content width",
+      "default": 620
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary button label",
+      "default": "Shop the range"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Secondary button label",
+      "default": "See the test results"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,55 @@
+<div class="section">
+  <div class="page-width">
+    <div class="account__header">
+      <div>
+        <h1 class="h1">{{ 'customer.account.title' | t }}</h1>
+        {%- assign customer_name = customer.first_name | default: customer.email -%}
+        <p class="text-muted">{{ 'customer.account.welcome' | t: name: customer_name }}</p>
+      </div>
+
+      <div class="account__actions">
+        <a href="{{ routes.account_addresses_url }}" class="button button--secondary">
+          {{- 'customer.account.view_addresses' | t -}}
+        </a>
+        <a href="{{ routes.account_logout_url }}" class="button button--link">
+          {{- 'customer.account.log_out' | t -}}
+        </a>
+      </div>
+    </div>
+
+    <h2 class="h3 account__section-title">{{ 'customer.account.order_history' | t }}</h2>
+
+    {%- paginate customer.orders by 20 -%}
+      {%- if customer.orders.size > 0 -%}
+        <table class="account__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+              <th scope="col">{{ 'customer.orders.date' | t }}</th>
+              <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+              <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+              <th scope="col">{{ 'customer.orders.total' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for order in customer.orders -%}
+              <tr>
+                <td>
+                  <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                </td>
+                <td>{{ order.created_at | date: '%d %B %Y' }}</td>
+                <td>{{ order.financial_status_label }}</td>
+                <td>{{ order.fulfillment_status_label }}</td>
+                <td>{{ order.total_price | money_with_currency }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <p class="text-muted">{{ 'customer.account.no_orders' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>

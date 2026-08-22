@@ -1,0 +1,147 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="newsletter">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="rte text-muted newsletter__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- form 'customer', class: 'newsletter__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="NewsletterEmail-{{ section.id }}">
+          {{- 'general.newsletter.label' | t -}}
+        </label>
+        <div class="newsletter__row">
+          <input
+            type="email"
+            id="NewsletterEmail-{{ section.id }}"
+            name="contact[email]"
+            class="field__input"
+            placeholder="{{ 'general.newsletter.placeholder' | t }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="button button--primary">
+            {{- section.settings.button_label | default: 'Subscribe' -}}
+          </button>
+        </div>
+
+        {%- if form.errors -%}
+          <p class="form__message form__message--error">
+            {{ form.errors.translated_fields.email }} {{ form.errors.messages.email }}
+          </p>
+        {%- elsif form.posted_successfully? -%}
+          <p class="form__message form__message--success">
+            {{ 'general.newsletter.success' | t }}
+          </p>
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="newsletter__disclaimer text-small text-muted">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    max-width: 34rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .newsletter__text {
+    max-width: 46ch;
+  }
+
+  .newsletter__form {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .newsletter__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .newsletter__row .field__input {
+    flex: 1 1 14rem;
+  }
+
+  .newsletter__disclaimer {
+    margin: 0;
+    max-width: 44ch;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-5"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join the list"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Research summaries, restock alerts and subscriber-only pricing. Roughly once a fortnight.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "Unsubscribe any time. We never share your details."
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

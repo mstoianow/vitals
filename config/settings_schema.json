@@ -1,0 +1,319 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Vitals",
+    "theme_author": "MST Collective",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes",
+    "theme_support_url": "https://shopify.dev/docs/storefronts/themes"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "Background gradient",
+            "info": "Replaces the background colour when set."
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "Text",
+            "default": "#1A1D1A"
+          },
+          {
+            "type": "color",
+            "id": "button",
+            "label": "Primary button background",
+            "default": "#1A1D1A"
+          },
+          {
+            "type": "color",
+            "id": "button_label",
+            "label": "Primary button text",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_label",
+            "label": "Secondary button text",
+            "default": "#1A1D1A"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "Borders",
+            "default": "#E2E1D8"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "Accent",
+            "default": "#2F4F3A"
+          },
+          {
+            "type": "color",
+            "id": "shadow",
+            "label": "Shadow",
+            "default": "#1A1D1A"
+          }
+        ],
+        "role": {
+          "text": "text",
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "links": "text",
+          "icons": "text",
+          "primary_button": "button",
+          "on_primary_button": "button_label",
+          "primary_button_border": "button",
+          "secondary_button": "background",
+          "on_secondary_button": "secondary_button_label",
+          "secondary_button_border": "secondary_button_label"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 90,
+        "max": 140,
+        "step": 5,
+        "unit": "%",
+        "label": "Size scale",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "heading_transform",
+        "label": "Capitalisation",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Size scale",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Page width",
+        "default": 1320
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "min": 0,
+        "max": 60,
+        "step": 4,
+        "unit": "px",
+        "label": "Space between sections",
+        "default": 0,
+        "info": "Applied in addition to each section's own top and bottom padding."
+      },
+      {
+        "type": "header",
+        "content": "Corners"
+      },
+      {
+        "type": "range",
+        "id": "radius_button",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Buttons",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "radius_input",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "label": "Inputs",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "radius_card",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Cards and images",
+        "default": 12
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image shape",
+        "options": [
+          {
+            "value": "square",
+            "label": "Square"
+          },
+          {
+            "value": "portrait",
+            "label": "Portrait"
+          },
+          {
+            "value": "natural",
+            "label": "Natural"
+          }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_second_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_quick_add",
+        "label": "Show quick add button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "Enable order notes",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_free_shipping_bar",
+        "label": "Show free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "info": "In your store currency, without decimals. For example, enter 50 for £50.",
+        "default": 50
+      }
+    ]
+  },
+  {
+    "name": "Brand and social",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Will be scaled down to 32 x 32px."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Social sharing image",
+        "info": "Used when a page without its own image is shared. 1200 x 628px recommended."
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok_link",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube_link",
+        "label": "YouTube"
+      }
+    ]
+  }
+]

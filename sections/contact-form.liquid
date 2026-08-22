@@ -1,0 +1,149 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width page-width--narrow">
+    <div class="contact">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="rte text-muted">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- form 'contact', class: 'contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form__message form__message--success">
+            {% render 'icon', name: 'check', size: 16 %}
+            {{ 'templates.contact.success' | t }}
+          </p>
+        {%- elsif form.errors -%}
+          <p class="form__message form__message--error">
+            {{ form.errors | default_errors }}
+          </p>
+        {%- endif -%}
+
+        <div class="contact__row">
+          <div class="field">
+            <label class="field__label" for="ContactName">{{ 'templates.contact.name' | t }}</label>
+            <input
+              type="text"
+              id="ContactName"
+              name="contact[name]"
+              class="field__input"
+              value="{{ form.name }}"
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="ContactEmail">{{ 'templates.contact.email' | t }}</label>
+            <input
+              type="email"
+              id="ContactEmail"
+              name="contact[email]"
+              class="field__input"
+              value="{{ form.email }}"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="ContactPhone">{{ 'templates.contact.phone' | t }}</label>
+          <input
+            type="tel"
+            id="ContactPhone"
+            name="contact[phone]"
+            class="field__input"
+            value="{{ form.phone }}"
+            autocomplete="tel"
+          >
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="ContactMessage">{{ 'templates.contact.message' | t }}</label>
+          <textarea id="ContactMessage" name="contact[body]" class="field__input" rows="6">{{ form.body }}</textarea>
+        </div>
+
+        <button type="submit" class="button button--primary">
+          {{- 'templates.contact.send' | t -}}
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-top: 1rem;
+  }
+
+  .contact__form > .field,
+  .contact__row {
+    width: 100%;
+  }
+
+  .contact__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .contact__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Questions about a formula, an order or a batch certificate? We reply within one business day.</p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}

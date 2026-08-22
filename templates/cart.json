@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_block": 48
+      }
+    }
+  },
+  "order": ["main"]
+}

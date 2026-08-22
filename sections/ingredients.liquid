@@ -1,0 +1,231 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width">
+    <div class="ingredients">
+      {%- if section.settings.image != blank -%}
+        <div class="ingredients__media media media--portrait">
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 45vw, 100vw', widths: '400, 600, 900, 1200', alt: section.settings.image.alt
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="ingredients__content">
+        <div class="ingredients__header">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="h2">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <div class="rte text-muted">{{ section.settings.text }}</div>
+          {%- endif -%}
+        </div>
+
+        <ul class="ingredients__list">
+          {%- for block in section.blocks -%}
+            <li class="ingredients__item" {{ block.shopify_attributes }}>
+              <div class="ingredients__row">
+                <h3 class="ingredients__name">{{ block.settings.name }}</h3>
+                <span class="ingredients__amount">{{ block.settings.amount }}</span>
+              </div>
+              {%- if block.settings.description != blank -%}
+                <p class="ingredients__description text-small text-muted">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.footnote != blank -%}
+          <p class="ingredients__footnote text-small text-muted">{{ section.settings.footnote }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .ingredients {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .ingredients__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .ingredients__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .ingredients__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ingredients__item {
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .ingredients__item:first-child {
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .ingredients__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .ingredients__name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .ingredients__amount {
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: rgb(var(--color-accent));
+    font-weight: 600;
+  }
+
+  .ingredients__description {
+    margin: 0.35rem 0 0;
+  }
+
+  .ingredients__footnote {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ingredients {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 4rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "What is inside"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every active, every dose"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>No proprietary blends. Here is exactly what is in each serving and why it is there.</p>"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "Amounts shown per daily serving of two capsules."
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Vitamin D3 (cholecalciferol)"
+        },
+        {
+          "type": "text",
+          "id": "amount",
+          "label": "Amount per serving",
+          "default": "4000 IU"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Supports normal immune function and the maintenance of bones and teeth."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamin D3 (cholecalciferol)",
+            "amount": "4000 IU",
+            "description": "Supports normal immune function and the maintenance of bones and teeth."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Magnesium bisglycinate",
+            "amount": "300 mg",
+            "description": "A highly absorbable form that supports muscle function and normal sleep."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamin K2 (MK-7)",
+            "amount": "100 mcg",
+            "description": "Works alongside vitamin D to direct calcium towards bone."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

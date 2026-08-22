@@ -1,0 +1,48 @@
+<div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
+  <div class="page-width page-width--narrow">
+    <h1 class="page__title h1">{{ page.title | escape }}</h1>
+    {%- if page.content != blank -%}
+      <div class="page__content rte">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .page__title {
+    margin-bottom: 2rem;
+  }
+
+  .page__content > * + * {
+    margin-top: 1em;
+  }
+
+  .page__content h2,
+  .page__content h3 {
+    margin-top: 2rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 56
+    }
+  ]
+}
+{% endschema %}
