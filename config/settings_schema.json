@@ -92,7 +92,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Shopify's font CDN serves Latin-only font files, so Cyrillic text (Bulgarian, Russian, Ukrainian) always renders in the theme's built-in Source Sans 3 fallback, whichever font you pick here. For one typeface across both scripts choose Source Sans Pro — Source Sans 3 is its current version. System fonts use their own Cyrillic."
+        "content": "Shopify's font CDN serves Latin-only font files, so Cyrillic text (Bulgarian, Russian, Ukrainian) always renders in the theme's built-in Source Sans 3 fallback, whichever font you pick here. The default, Source Sans Pro, is the same design as that fallback, so Latin and Cyrillic read as one family. System fonts use their own Cyrillic."
       },
       {
         "type": "header",
@@ -102,7 +102,7 @@
         "type": "font_picker",
         "id": "type_header_font",
         "label": "Font",
-        "default": "assistant_n4"
+        "default": "source_sans_pro_n4"
       },
       {
         "type": "range",
@@ -138,7 +138,7 @@
         "type": "font_picker",
         "id": "type_body_font",
         "label": "Font",
-        "default": "assistant_n4"
+        "default": "source_sans_pro_n4"
       },
       {
         "type": "range",

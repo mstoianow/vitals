@@ -100,7 +100,8 @@ h6,
   font-weight: var(--font-heading-weight);
   text-transform: var(--font-heading-transform);
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--font-heading-tracking, -0.02em);
+  overflow-wrap: break-word;
   text-wrap: balance;
 }
 
@@ -159,6 +160,28 @@ a {
   opacity: 0.7;
 }
 
+/* Cyrillic glyphs run roughly 15-18% wider than Latin ones, so the tight
+   Latin tracking crowds them. Loosen it when the storefront language is Cyrillic. */
+body:is(:lang(bg), :lang(ru), :lang(uk), :lang(be), :lang(mk), :lang(sr), :lang(kk), :lang(ky), :lang(mn), :lang(tg)) {
+  letter-spacing: 0;
+}
+
+:is(h1, h2, h3, h4, h5, h6, .h0, .h1, .h2, .h3, .h4):is(:lang(bg), :lang(ru), :lang(uk), :lang(be), :lang(mk), :lang(sr), :lang(kk), :lang(ky), :lang(mn), :lang(tg)) {
+  letter-spacing: var(--font-heading-tracking-cyrillic, -0.01em);
+}
+
+.eyebrow:is(:lang(bg), :lang(ru), :lang(uk), :lang(be), :lang(mk), :lang(sr), :lang(kk), :lang(ky), :lang(mn), :lang(tg)) {
+  letter-spacing: 0.1em;
+}
+
+.badge:is(:lang(bg), :lang(ru), :lang(uk), :lang(be), :lang(mk), :lang(sr), :lang(kk), :lang(ky), :lang(mn), :lang(tg)) {
+  letter-spacing: 0.04em;
+}
+
+.button:is(:lang(bg), :lang(ru), :lang(uk), :lang(be), :lang(mk), :lang(sr), :lang(kk), :lang(ky), :lang(mn), :lang(tg)) {
+  padding-inline: 1.25rem;
+}
+
 /* Rich text output from the theme editor */
 .rte > *:first-child {
   margin-top: 0;
@@ -177,6 +200,11 @@ a {
 
 .rte li {
   margin-bottom: 0.35em;
+}
+
+.rte strong,
+.rte b {
+  font-weight: var(--font-body-weight-bold, 700);
 }
 
 .rte img {

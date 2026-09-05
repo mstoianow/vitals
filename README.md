@@ -71,26 +71,41 @@ to browser-synthesised faux styles.
 Montserrat and PT Serif — families whose upstream releases all contain full Cyrillic — each
 have 0 glyphs in U+0400–04FF. The CDN's Inter file even carries the same build string as the
 official Inter 3.19 release, which has 254 Cyrillic codepoints; same build, Cyrillic stripped.
-So no picker choice can render Cyrillic on its own. The theme therefore self-hosts a
+Shopify documents this: font files include "Basic Latin, Latin-1 Supplement, Latin
+Extended-A, Currency Symbols… If you need to use a broader range of characters, then you can
+use system fonts, Typekit, and other solutions." So no picker choice can render Cyrillic on
+its own. The theme therefore self-hosts a
 Cyrillic-only subset of **Source Sans 3** — the typeface Assistant was derived from — in
 `assets/`:
 
 - `source-sans-3-cyrillic-upright.woff2` (31 KB) and `source-sans-3-cyrillic-italic.woff2` (23 KB)
-- declared with `unicode-range: U+0400-052F, U+1C80-1C8F, U+2DE0-2DFF, U+A640-A69F, U+2116`,
-  so the browser downloads them only when Cyrillic text is actually on the page
+- declared with `unicode-range: U+0400-04FF, U+2116` (exactly what the files contain), so
+  they are only used for Cyrillic glyphs and №, never for Latin
 - placed second in every font stack: the picker font renders Latin, this face renders any
   Cyrillic glyph the picker font lacks, then a cross-platform system stack, then Shopify's
   generic fallback
-- declared at weights 400 and 700 (plus the heading weight if it differs) to mirror the static
-  faces Shopify serves, so mixed Latin/Cyrillic text stays weight-matched
-- preloaded on Cyrillic-locale pages (`bg`, `ru`, `uk`, `be`, `mk`, `sr`, `kk`, `ky`, `mn`, `tg`)
-  to avoid a flash of fallback text
+- declared at exactly the weights and styles the picker font has in Shopify's library
+  (regular, 600, 700, and italics only when the picker font has italics — Assistant does not),
+  so mixed Latin/Cyrillic text stays weight- and style-matched and never pairs a true italic
+  with a synthesised one
+- preloaded on every page alongside the body font (32 KB, cached after the first page) so
+  Bulgarian text never flashes in a system font — a Bulgarian store carries Cyrillic content
+  long before Bulgarian is published as a storefront language, so a locale gate would never fire
 
 Because `layout/theme.liquid` sets `<html lang>` from the request locale, Source Sans 3's
 Bulgarian localised letterforms (`locl` for `cyrl/BGR`) switch on automatically for a Bulgarian
 storefront — the distinctive Bulgarian shapes of д, л, ф, и, т and в rather than the Russian
-ones. Choosing a system font in the picker bypasses the fallback, since system fonts carry
-their own Cyrillic.
+ones. Those letterforms and the `:lang()` tracking adjustments in `base.css` key off the
+request locale, so Bulgarian must be published as a storefront language (Settings →
+Languages; the theme does not yet ship a `locales/bg.json`) for them to activate. Choosing a
+system font in the picker bypasses the fallback, since system fonts carry their own Cyrillic.
+
+The picker default is **Source Sans Pro** (`source_sans_pro_n4`), Source Sans 3's previous
+name, so Latin and Cyrillic come from one design. Assistant — the original default — was
+itself derived from Source Sans Pro and measures identically (cap height 657 vs 656 units,
+x-height 485 vs 486), so the switch is invisible; what it adds is true italics, which
+Assistant does not have in Shopify's library. The heading `letter-spacing` is driven by
+`--font-heading-tracking`, which flips positive when the uppercase heading option is on.
 
 Source Sans 3 is © Adobe, licensed under the SIL Open Font License 1.1; the licence text is
 retained in the font files' name table. To regenerate the subsets from the upstream variable

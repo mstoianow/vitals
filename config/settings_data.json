@@ -67,10 +67,10 @@
         }
       }
     },
-    "type_header_font": "assistant_n4",
+    "type_header_font": "source_sans_pro_n4",
     "heading_scale": 100,
     "heading_transform": "none",
-    "type_body_font": "assistant_n4",
+    "type_body_font": "source_sans_pro_n4",
     "body_scale": 100,
     "page_width": 1320,
     "spacing_sections": 0,
@@ -91,10 +91,10 @@
   },
   "presets": {
     "Default": {
-      "type_header_font": "assistant_n4",
+      "type_header_font": "source_sans_pro_n4",
       "heading_scale": 100,
       "heading_transform": "none",
-      "type_body_font": "assistant_n4",
+      "type_body_font": "source_sans_pro_n4",
       "body_scale": 100,
       "page_width": 1320,
       "spacing_sections": 0,
