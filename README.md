@@ -57,6 +57,49 @@ inline `style="--custom-property: value"` attributes.
 Anything shared between two or more sections belongs in `base.css`, not in a section
 stylesheet — section CSS is only served when that section renders on the page.
 
+### Fonts and Cyrillic
+
+Fonts come from the theme editor's font picker (`type_body_font`, `type_header_font`) and
+are loaded in `layout/theme.liquid` inside a `<style>` block — the `font_face` filter emits
+raw `@font-face` CSS, so it must never sit bare in `<head>`. Bold, italic and bold-italic
+faces are loaded via `font_modify` so that `font-weight: 600/700` and `<em>` never fall back
+to browser-synthesised faux styles.
+
+**Cyrillic is guaranteed independently of the picker — and has to be.** Shopify's font CDN
+(`fonts.shopifycdn.com`) serves Latin-only subsets of every font in the picker. Measured on
+2026-09-05: twelve real CDN files across Inter, Source Sans Pro, Roboto, Nunito Sans,
+Montserrat and PT Serif — families whose upstream releases all contain full Cyrillic — each
+have 0 glyphs in U+0400–04FF. The CDN's Inter file even carries the same build string as the
+official Inter 3.19 release, which has 254 Cyrillic codepoints; same build, Cyrillic stripped.
+So no picker choice can render Cyrillic on its own. The theme therefore self-hosts a
+Cyrillic-only subset of **Source Sans 3** — the typeface Assistant was derived from — in
+`assets/`:
+
+- `source-sans-3-cyrillic-upright.woff2` (31 KB) and `source-sans-3-cyrillic-italic.woff2` (23 KB)
+- declared with `unicode-range: U+0400-052F, U+1C80-1C8F, U+2DE0-2DFF, U+A640-A69F, U+2116`,
+  so the browser downloads them only when Cyrillic text is actually on the page
+- placed second in every font stack: the picker font renders Latin, this face renders any
+  Cyrillic glyph the picker font lacks, then a cross-platform system stack, then Shopify's
+  generic fallback
+- declared at weights 400 and 700 (plus the heading weight if it differs) to mirror the static
+  faces Shopify serves, so mixed Latin/Cyrillic text stays weight-matched
+- preloaded on Cyrillic-locale pages (`bg`, `ru`, `uk`, `be`, `mk`, `sr`, `kk`, `ky`, `mn`, `tg`)
+  to avoid a flash of fallback text
+
+Because `layout/theme.liquid` sets `<html lang>` from the request locale, Source Sans 3's
+Bulgarian localised letterforms (`locl` for `cyrl/BGR`) switch on automatically for a Bulgarian
+storefront — the distinctive Bulgarian shapes of д, л, ф, и, т and в rather than the Russian
+ones. Choosing a system font in the picker bypasses the fallback, since system fonts carry
+their own Cyrillic.
+
+Source Sans 3 is © Adobe, licensed under the SIL Open Font License 1.1; the licence text is
+retained in the font files' name table. To regenerate the subsets from the upstream variable
+fonts (`google/fonts` → `ofl/sourcesans3`):
+
+```bash
+pyftsubset SourceSans3[wght].ttf --unicodes="U+0400-052F,U+1C80-1C8F,U+2DE0-2DFF,U+A640-A69F,U+2116" --flavor=woff2 --layout-features='*' --name-IDs='*' --output-file=source-sans-3-cyrillic-upright.woff2
+```
+
 ### Sections
 
 Commerce: `main-product`, `main-collection`, `main-cart`, `main-search`, `main-page`,

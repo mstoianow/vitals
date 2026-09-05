@@ -91,6 +91,10 @@
     "name": "Typography",
     "settings": [
       {
+        "type": "paragraph",
+        "content": "Shopify's font CDN serves Latin-only font files, so Cyrillic text (Bulgarian, Russian, Ukrainian) always renders in the theme's built-in Source Sans 3 fallback, whichever font you pick here. For one typeface across both scripts choose Source Sans Pro — Source Sans 3 is its current version. System fonts use their own Cyrillic."
+      },
+      {
         "type": "header",
         "content": "Headings"
       },

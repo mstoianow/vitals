@@ -24,8 +24,53 @@
 
     {% render 'meta-tags' %}
 
-    {{ settings.type_body_font | font_face: font_display: 'swap' }}
-    {{ settings.type_header_font | font_face: font_display: 'swap' }}
+    {%- liquid
+      assign body_font = settings.type_body_font
+      assign heading_font = settings.type_header_font
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = body_font | font_modify: 'style', 'italic'
+      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+      assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
+      assign body_key = body_font.family | append: body_font.weight | append: body_font.style
+      assign heading_key = heading_font.family | append: heading_font.weight | append: heading_font.style
+    -%}
+
+    {%- unless body_font.system? and heading_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    {%- liquid
+      assign locale_root = request.locale.iso_code | split: '-' | first
+      assign cyrillic_locales = 'bg,ru,uk,be,mk,sr,kk,ky,mn,tg' | split: ','
+    -%}
+    {%- if cyrillic_locales contains locale_root and body_font.system? == false -%}
+      {{ 'source-sans-3-cyrillic-upright.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+    {%- endif -%}
+
+    <style>
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+      {%- unless heading_key == body_key -%}
+        {{ heading_font | font_face: font_display: 'swap' }}
+        {{ heading_font_bold | font_face: font_display: 'swap' }}
+      {%- endunless -%}
+
+      {%- liquid
+        assign cyrillic_upright = 'source-sans-3-cyrillic-upright.woff2' | asset_url
+        assign cyrillic_italic = 'source-sans-3-cyrillic-italic.woff2' | asset_url
+        assign cyrillic_range = 'U+0400-052F, U+1C80-1C8F, U+2DE0-2DFF, U+A640-A69F, U+2116'
+        assign heading_weight = heading_font.weight | times: 1
+      -%}
+      @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 400; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+      @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+      @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: italic; font-weight: 400; font-display: swap; src: url("{{ cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+      @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: italic; font-weight: 700; font-display: swap; src: url("{{ cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+      {%- unless heading_weight == 400 or heading_weight == 700 -%}
+        @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: {{ heading_weight }}; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+      {%- endunless -%}
+    </style>
 
     {% style %}
       {%- for scheme in settings.color_schemes -%}
@@ -47,12 +92,20 @@
         --page-width: {{ settings.page_width }}px;
         --spacing-sections: {{ settings.spacing_sections }}px;
 
-        --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        {%- if body_font.system? -%}
+        --font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+        {%- else -%}
+        --font-body-family: "{{ body_font.family }}", "Source Sans 3 Cyrillic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ body_font.fallback_families }};
+        {%- endif %}
         --font-body-style: {{ settings.type_body_font.style }};
         --font-body-weight: {{ settings.type_body_font.weight }};
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 900 }};
 
-        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+        {%- if heading_font.system? -%}
+        --font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        {%- else -%}
+        --font-heading-family: "{{ heading_font.family }}", "Source Sans 3 Cyrillic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ heading_font.fallback_families }};
+        {%- endif %}
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
         --font-heading-transform: {{ settings.heading_transform }};
