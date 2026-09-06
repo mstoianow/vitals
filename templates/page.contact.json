@@ -4,18 +4,21 @@
       "type": "main-page",
       "settings": {
         "color_scheme": "scheme-1",
-        "padding_block": 56
+        "padding_block": 72
       }
     },
     "form": {
       "type": "contact-form",
       "settings": {
         "color_scheme": "scheme-1",
-        "heading": "Get in touch",
-        "text": "<p>Questions about a formula, an order or a batch certificate? We reply within one business day.</p>",
+        "heading": "Свържете се с нас",
+        "text": "<p>Въпрос за формула, поръчка или сертификат за партида? Отговаряме до един работен ден.</p>",
         "padding_block": 24
       }
     }
   },
-  "order": ["main", "form"]
+  "order": [
+    "main",
+    "form"
+  ]
 }

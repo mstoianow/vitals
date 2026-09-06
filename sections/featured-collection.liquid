@@ -31,8 +31,9 @@
 
       {%- if section.settings.show_view_all -%}
         <div class="featured-collection__footer">
+          {%- assign view_all_label = 'sections.featured_collection.view_all' | t -%}
           <a href="{{ target.url }}" class="button button--secondary">
-            {{- section.settings.view_all_label | default: 'View all' -}}
+            {{- section.settings.view_all_label | default: view_all_label -}}
           </a>
         </div>
       {%- endif -%}
@@ -90,7 +91,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Best sellers"
+      "default": "Най-продавани"
     },
     {
       "type": "richtext",
@@ -157,7 +158,7 @@
       "type": "text",
       "id": "view_all_label",
       "label": "'View all' button label",
-      "default": "View all"
+      "default": "Виж всички"
     },
     {
       "type": "range",

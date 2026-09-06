@@ -45,9 +45,10 @@
           {%- if shop.customer_accounts_enabled -%}
             <a href="{{ routes.account_url }}" class="header__drawer-link">
               {%- if customer -%}
-                {{ customer.first_name | default: 'Account' }}
+                {%- assign account_label = 'customer.account.title' | t -%}
+                {{ customer.first_name | default: account_label }}
               {%- else -%}
-                Log in
+                {{ 'customer.login.title' | t }}
               {%- endif -%}
             </a>
           {%- endif -%}
@@ -68,7 +69,7 @@
           | image_tag: loading: 'eager', widths: '130, 260, 390, 520, 600', alt: shop.name
         }}
       {%- else -%}
-        <span class="header__logo-text">{{ shop.name }}</span>
+        <span class="header__logo-text">{{ section.settings.logo_text | default: shop.name | escape }}</span>
       {%- endif -%}
     </a>
     {%- if request.page_type == 'index' -%}
@@ -127,7 +128,7 @@
         <a
           href="{{ routes.account_url }}"
           class="header__icon-button header__account"
-          aria-label="{{ 'accessibility.menu' | t }}"
+          aria-label="{{ 'accessibility.account' | t }}"
         >
           {% render 'icon', name: 'user', size: 21 %}
         </a>
@@ -217,11 +218,18 @@
   }
 
   .header__logo-text {
+    display: inline-block;
     font-family: var(--font-heading-family);
+    font-size: 1.75rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    line-height: 1;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  .header__logo-text::first-letter {
+    font-size: 1.3em;
   }
 
   /* Desktop navigation */
@@ -240,16 +248,20 @@
   .header__nav-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.2rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--radius-input);
-    font-size: 0.9375rem;
+    gap: 0.3rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
   }
 
   .header__nav-link:hover {
-    background-color: rgb(var(--color-text) / 0.06);
+    opacity: 1;
   }
 
   .header__dropdown {
@@ -266,8 +278,7 @@
 
   .header__dropdown-link {
     display: block;
-    padding: 0.55rem 0.75rem;
-    border-radius: calc(var(--radius-input) * 0.75);
+    padding: 0.6rem 0.75rem;
     font-size: 0.9375rem;
     text-decoration: none;
   }
@@ -298,11 +309,11 @@
     min-width: 1.15rem;
     height: 1.15rem;
     padding-inline: 0.25rem;
-    background-color: rgb(var(--color-accent));
+    background-color: rgb(var(--color-text));
     color: rgb(var(--color-background));
     border-radius: 999px;
     font-size: 0.6875rem;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1;
   }
 
@@ -360,9 +371,11 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.9rem 0;
+    padding: 1rem 0;
     border-bottom: 1px solid rgb(var(--color-border));
-    font-size: 1.0625rem;
+    font-family: var(--font-heading-family);
+    font-size: 1.5rem;
+    line-height: 1.1;
     text-decoration: none;
   }
 
@@ -417,6 +430,13 @@
       "label": "Logo"
     },
     {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Wordmark text",
+      "default": "Verdvna",
+      "info": "Shown in the heading font when no logo image is set. The first letter is set larger, like the label."
+    },
+    {
       "type": "range",
       "id": "logo_width",
       "min": 60,
@@ -464,7 +484,7 @@
       "step": 2,
       "unit": "px",
       "label": "Vertical padding",
-      "default": 16
+      "default": 22
     }
   ],
   "enabled_on": {

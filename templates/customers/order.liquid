@@ -3,11 +3,11 @@
     <div class="account__header">
       <div>
         <h1 class="h1">{{ 'customer.order.title' | t: name: order.name }}</h1>
-        {%- assign order_date = order.created_at | date: '%d %B %Y' -%}
+        {%- assign order_date = order.created_at | date: format: 'month_day_year' -%}
         <p class="text-muted">{{ 'customer.order.placed_on' | t: date: order_date }}</p>
 
         {%- if order.cancelled -%}
-          {%- assign cancelled_date = order.cancelled_at | date: '%d %B %Y' -%}
+          {%- assign cancelled_date = order.cancelled_at | date: format: 'month_day_year' -%}
           <p class="form__message form__message--error">
             {{ 'customer.order.cancelled' | t: date: cancelled_date }}
           </p>
@@ -36,7 +36,7 @@
             <td>
               <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
               {%- if line_item.sku != blank -%}
-                <span class="text-small text-muted">{{ 'customer.order.sku' | t }}: {{ line_item.sku }}</span>
+                <span class="text-small text-muted">{{ 'customer.order.sku_with_value' | t: sku: line_item.sku }}</span>
               {%- endif -%}
             </td>
             <td>{{ line_item.price | money }}</td>
@@ -52,13 +52,13 @@
         </tr>
         {%- for shipping_method in order.shipping_methods -%}
           <tr>
-            <td colspan="3">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td>
+            <td colspan="3">{{ 'customer.order.shipping_with_method' | t: method: shipping_method.title }}</td>
             <td>{{ shipping_method.price | money }}</td>
           </tr>
         {%- endfor -%}
         {%- for tax_line in order.tax_lines -%}
           <tr>
-            <td colspan="3">{{ 'customer.order.tax' | t }} ({{ tax_line.title }})</td>
+            <td colspan="3">{{ 'customer.order.tax_with_title' | t: title: tax_line.title }}</td>
             <td>{{ tax_line.price | money }}</td>
           </tr>
         {%- endfor -%}

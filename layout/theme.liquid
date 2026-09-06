@@ -30,14 +30,43 @@
       assign body_font_bold = body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = body_font | font_modify: 'style', 'italic'
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+      assign heading_font_light = heading_font | font_modify: 'weight', '300'
       assign heading_font_semibold = heading_font | font_modify: 'weight', '600'
       assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
       assign body_key = body_font.family | append: body_font.weight | append: body_font.style
       assign heading_key = heading_font.family | append: heading_font.weight | append: heading_font.style
 
-      assign cyrillic_upright = 'source-sans-3-cyrillic-upright.woff2' | asset_url
-      assign cyrillic_italic = 'source-sans-3-cyrillic-italic.woff2' | asset_url
       assign cyrillic_range = 'U+0400-04FF, U+2116'
+
+      assign body_companion = 'source-sans-3-cyrillic'
+      assign body_companion_family = 'Source Sans 3 Cyrillic'
+      if body_font.family contains 'Cormorant'
+        assign body_companion = 'cormorant-cyrillic'
+        assign body_companion_family = 'Cormorant Cyrillic'
+      elsif body_font.family contains 'Jost'
+        assign body_companion = 'jost-cyrillic'
+        assign body_companion_family = 'Jost Cyrillic'
+      elsif body_font.fallback_families == 'serif'
+        assign body_companion = 'cormorant-cyrillic'
+        assign body_companion_family = 'Cormorant Cyrillic'
+      endif
+
+      assign heading_companion = 'source-sans-3-cyrillic'
+      assign heading_companion_family = 'Source Sans 3 Cyrillic'
+      if heading_font.family contains 'Cormorant'
+        assign heading_companion = 'cormorant-cyrillic'
+        assign heading_companion_family = 'Cormorant Cyrillic'
+      elsif heading_font.family contains 'Jost'
+        assign heading_companion = 'jost-cyrillic'
+        assign heading_companion_family = 'Jost Cyrillic'
+      elsif heading_font.fallback_families == 'serif'
+        assign heading_companion = 'cormorant-cyrillic'
+        assign heading_companion_family = 'Cormorant Cyrillic'
+      endif
+
+      assign body_cyrillic_upright = body_companion | append: '-upright.woff2' | asset_url
+      assign body_cyrillic_italic = body_companion | append: '-italic.woff2' | asset_url
+      assign heading_cyrillic_upright = heading_companion | append: '-upright.woff2' | asset_url
     -%}
 
     {%- unless body_font.system? and heading_font.system? -%}
@@ -45,8 +74,10 @@
     {%- endunless -%}
 
     {%- unless body_font.system? -%}
-      {{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
-      {{ cyrillic_upright | preload_tag: as: 'font', type: 'font/woff2' }}
+      {{ body_cyrillic_upright | preload_tag: as: 'font', type: 'font/woff2' }}
+    {%- endunless -%}
+    {%- unless heading_font.system? or heading_companion == body_companion -%}
+      {{ heading_cyrillic_upright | preload_tag: as: 'font', type: 'font/woff2' }}
     {%- endunless -%}
 
     <style>
@@ -57,32 +88,36 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {%- unless heading_key == body_key -%}
         {{ heading_font | font_face: font_display: 'swap' }}
+        {{ heading_font_light | font_face: font_display: 'swap' }}
         {{ heading_font_semibold | font_face: font_display: 'swap' }}
         {{ heading_font_bold | font_face: font_display: 'swap' }}
       {%- endunless -%}
 
       {%- unless body_font.system? -%}
-        @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: {{ body_font.weight }}; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+        @font-face { font-family: "{{ body_companion_family }}"; font-style: normal; font-weight: {{ body_font.weight }}; font-display: swap; src: url("{{ body_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- if body_font_semibold -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 600; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ body_companion_family }}"; font-style: normal; font-weight: 600; font-display: swap; src: url("{{ body_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
         {%- if body_font_bold -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ body_companion_family }}"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ body_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
         {%- if body_font_italic -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: italic; font-weight: {{ body_font.weight }}; font-display: swap; src: url("{{ cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ body_companion_family }}"; font-style: italic; font-weight: {{ body_font.weight }}; font-display: swap; src: url("{{ body_cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
         {%- if body_font_bold_italic -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: italic; font-weight: 700; font-display: swap; src: url("{{ cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ body_companion_family }}"; font-style: italic; font-weight: 700; font-display: swap; src: url("{{ body_cyrillic_italic }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
       {%- endunless -%}
       {%- unless heading_font.system? or heading_key == body_key -%}
-        @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: {{ heading_font.weight }}; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+        @font-face { font-family: "{{ heading_companion_family }}"; font-style: normal; font-weight: {{ heading_font.weight }}; font-display: swap; src: url("{{ heading_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+        {%- if heading_font_light -%}
+          @font-face { font-family: "{{ heading_companion_family }}"; font-style: normal; font-weight: 300; font-display: swap; src: url("{{ heading_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+        {%- endif -%}
         {%- if heading_font_semibold -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 600; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ heading_companion_family }}"; font-style: normal; font-weight: 600; font-display: swap; src: url("{{ heading_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
         {%- if heading_font_bold -%}
-          @font-face { font-family: "Source Sans 3 Cyrillic"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
+          @font-face { font-family: "{{ heading_companion_family }}"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ heading_cyrillic_upright }}") format("woff2"); unicode-range: {{ cyrillic_range }}; }
         {%- endif -%}
       {%- endunless -%}
     </style>
@@ -110,7 +145,7 @@
         {%- if body_font.system? -%}
         --font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
         {%- else -%}
-        --font-body-family: {{ body_font.family }}, "Source Sans 3 Cyrillic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ body_font.fallback_families }};
+        --font-body-family: {{ body_font.family }}, "{{ body_companion_family }}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ body_font.fallback_families }};
         {%- endif %}
         --font-body-style: {{ settings.type_body_font.style }};
         --font-body-weight: {{ settings.type_body_font.weight }};
@@ -120,17 +155,19 @@
         {%- if heading_font.system? -%}
         --font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
         {%- else -%}
-        --font-heading-family: {{ heading_font.family }}, "Source Sans 3 Cyrillic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ heading_font.fallback_families }};
+        --font-heading-family: {{ heading_font.family }}, "{{ heading_companion_family }}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, {{ heading_font.fallback_families }};
         {%- endif %}
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
+        --font-heading-weight-light: {{ heading_font_light.weight | default: heading_font.weight }};
+        --font-heading-weight-medium: {{ heading_font_semibold.weight | default: heading_font.weight }};
         --font-heading-transform: {{ settings.heading_transform }};
         {%- if settings.heading_transform == 'uppercase' -%}
-        --font-heading-tracking: 0.03em;
-        --font-heading-tracking-cyrillic: 0.03em;
+        --font-heading-tracking: 0.06em;
+        --font-heading-tracking-cyrillic: 0.06em;
         {%- else -%}
-        --font-heading-tracking: -0.02em;
-        --font-heading-tracking-cyrillic: -0.01em;
+        --font-heading-tracking: -0.01em;
+        --font-heading-tracking-cyrillic: 0;
         {%- endif %}
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};

@@ -1,7 +1,8 @@
 <div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
   <div class="page-width">
     <div class="image-with-text image-with-text--{{ section.settings.image_position }}">
-      <div class="image-with-text__media media media--{{ section.settings.image_ratio }}">
+      <div class="image-with-text__media{% if section.settings.frame == 'double' %} frame--double{% endif %}">
+        <div class="media media--{{ section.settings.image_ratio }}{% if section.settings.frame == 'hairline' %} media--framed{% endif %}">
         {%- if section.settings.image != blank -%}
           {{
             section.settings.image
@@ -11,6 +12,7 @@
         {%- else -%}
           {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
+        </div>
       </div>
 
       <div class="image-with-text__content">
@@ -55,6 +57,10 @@
 
   .image-with-text__buttons {
     margin-top: 0.5rem;
+  }
+
+  .media--framed {
+    border: 1px solid rgb(var(--color-text));
   }
 
   @media screen and (min-width: 990px) {
@@ -122,6 +128,17 @@
       "default": "landscape"
     },
     {
+      "type": "select",
+      "id": "frame",
+      "label": "Image frame",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "hairline", "label": "Hairline" },
+        { "value": "double", "label": "Double rule, like the box" }
+      ],
+      "default": "none"
+    },
+    {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow"
@@ -130,13 +147,13 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Made for people who read the label"
+      "default": "Създадено за хората, които четат етикета"
     },
     {
       "type": "richtext",
       "id": "text",
       "label": "Text",
-      "default": "<p>We started because the supplements aisle is full of underdosed formulas hiding behind proprietary blends. Every product we make lists its actives in full, at doses backed by published research, and every batch is tested by an independent lab before it ships.</p>"
+      "default": "<p>Започнахме, защото рафтът с добавки е пълен с недостатъчно дозирани формули, скрити зад патентовани смеси. Всеки наш продукт посочва изцяло активните си съставки в дози, подкрепени от публикувани изследвания, а всяка партида се тества от независима лаборатория, преди да бъде изпратена.</p>"
     },
     {
       "type": "text",

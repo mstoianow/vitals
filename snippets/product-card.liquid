@@ -7,6 +7,9 @@
   @param {string} [image_ratio] - 'square', 'portrait' or 'natural'. Defaults to the theme setting.
   @param {boolean} [eager] - Loads the image eagerly. Use for the first row of a grid.
 
+  Shows the product's Roman numeral (metafield custom.numeral, e.g. "I") above the title
+  when set, in place of the vendor line.
+
   @example
   {% render 'product-card', product: product %}
 {% enddoc %}
@@ -29,6 +32,7 @@
   endif
 
   assign second_image = product.media[1].preview_image
+  assign numeral = product.metafields.custom.numeral | strip | remove: '°'
 -%}
 
 <div class="product-card">
@@ -69,7 +73,9 @@
   </div>
 
   <div class="product-card__info">
-    {%- if vendor_visible and product.vendor != blank -%}
+    {%- if numeral != blank -%}
+      <span class="numeral product-card__numeral">°{{ numeral }}</span>
+    {%- elsif vendor_visible and product.vendor != blank -%}
       <span class="product-card__vendor text-muted">{{ product.vendor }}</span>
     {%- endif -%}
 

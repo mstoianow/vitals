@@ -2,7 +2,7 @@
   <article class="page-width page-width--narrow article">
     <header class="article__header">
       {%- if section.settings.show_date -%}
-        <span class="eyebrow">{{ article.published_at | date: '%d %B %Y' }}</span>
+        <span class="eyebrow">{{ article.published_at | date: format: 'month_day_year' }}</span>
       {%- endif -%}
 
       <h1 class="h1">{{ article.title | escape }}</h1>

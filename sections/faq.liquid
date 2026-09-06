@@ -5,7 +5,8 @@
         {%- if section.settings.eyebrow != blank -%}
           <span class="eyebrow">{{ section.settings.eyebrow }}</span>
         {%- endif -%}
-        <h2 class="h2">{{ section.settings.heading | default: 'Frequently asked questions' }}</h2>
+        {%- assign faq_title = 'sections.faq.title' | t -%}
+        <h2 class="h2">{{ section.settings.heading | default: faq_title }}</h2>
         {%- if section.settings.text != blank -%}
           <div class="rte text-muted">{{ section.settings.text }}</div>
         {%- endif -%}
@@ -73,7 +74,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Frequently asked questions"
+      "default": "Често задавани въпроси"
     },
     {
       "type": "richtext",
@@ -100,13 +101,13 @@
           "type": "text",
           "id": "question",
           "label": "Question",
-          "default": "When should I take this?"
+          "default": "Кога да приемам продукта?"
         },
         {
           "type": "richtext",
           "id": "answer",
           "label": "Answer",
-          "default": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+          "default": "<p>Приемайте по две капсули дневно с храна. Редовността е по-важна от точния час, затова изберете момент, който лесно ще запомните.</p>"
         }
       ]
     }
@@ -118,29 +119,29 @@
         {
           "type": "question",
           "settings": {
-            "question": "When should I take this?",
-            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+            "question": "Кога да приемам продукта?",
+            "answer": "<p>Приемайте по две капсули дневно с храна. Редовността е по-важна от точния час, затова изберете момент, който лесно ще запомните.</p>"
           }
         },
         {
           "type": "question",
           "settings": {
-            "question": "How do I read the test results?",
-            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+            "question": "Как да разчета резултатите от тестовете?",
+            "answer": "<p>Всяка партида има сертификат за анализ, достъпен от страницата на продукта. В него е посочено измереното количество на всяко активно вещество, заедно с резултатите от изследванията за тежки метали и микробиологичен контрол.</p>"
           }
         },
         {
           "type": "question",
           "settings": {
-            "question": "Can I take more than one product together?",
-            "answer": "<p>Yes. The range is designed to stack without overlapping doses. If you take prescription medication, speak to your GP or pharmacist first.</p>"
+            "question": "Мога ли да комбинирам няколко продукта?",
+            "answer": "<p>Да. Продуктите са създадени така, че да се комбинират без припокриване на дозите. Ако приемате лекарства с рецепта, първо се консултирайте с вашия лекар или фармацевт.</p>"
           }
         },
         {
           "type": "question",
           "settings": {
-            "question": "What is your returns policy?",
-            "answer": "<p>If it is not right for you, contact us within 30 days for a full refund, opened or not.</p>"
+            "question": "Каква е политиката ви за връщане?",
+            "answer": "<p>Ако продуктът не е подходящ за вас, свържете се с нас в рамките на 30 дни за пълно възстановяване на сумата – независимо дали опаковката е отворена.</p>"
           }
         }
       ]

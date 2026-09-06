@@ -8,17 +8,20 @@
         "announcement-1": {
           "type": "announcement",
           "settings": {
-            "text": "Free UK delivery over £50"
+            "text": "Безплатна доставка над 50 €"
           }
         },
         "announcement-2": {
           "type": "announcement",
           "settings": {
-            "text": "Third-party tested, every batch"
+            "text": "Всяка партида – тествана от независима лаборатория"
           }
         }
       },
-      "block_order": ["announcement-1", "announcement-2"],
+      "block_order": [
+        "announcement-1",
+        "announcement-2"
+      ],
       "settings": {
         "color_scheme": "scheme-3"
       }
@@ -33,9 +36,13 @@
         "show_border": true,
         "show_search": true,
         "show_account": true,
-        "padding_block": 16
+        "padding_block": 22,
+        "logo_text": "Verdvna"
       }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

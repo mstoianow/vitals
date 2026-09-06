@@ -28,7 +28,7 @@
 
             <div class="article-card__info">
               {%- if section.settings.show_date -%}
-                <span class="eyebrow">{{ article.published_at | date: '%d %B %Y' }}</span>
+                <span class="eyebrow">{{ article.published_at | date: format: 'month_day_year' }}</span>
               {%- endif -%}
 
               <h2 class="h4">

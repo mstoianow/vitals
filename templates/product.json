@@ -33,33 +33,33 @@
         "trust_badges": {
           "type": "trust_badges",
           "settings": {
-            "badge_1": "Third-party tested",
+            "badge_1": "Тествано от независима лаборатория",
             "badge_1_icon": "beaker",
-            "badge_2": "Free UK delivery over £50",
+            "badge_2": "Безплатна доставка над 50 €",
             "badge_2_icon": "truck",
-            "badge_3": "Vegan and allergen free",
+            "badge_3": "Веган, без алергени",
             "badge_3_icon": "leaf"
           }
         },
-        "supplement_facts": {
+        "facts": {
           "type": "accordion",
           "settings": {
-            "heading": "Supplement facts",
-            "content": "<p>Add the full ingredient breakdown for this product, including amounts per serving and the reference intake percentage where one exists.</p>"
+            "heading": "Състав и дневна доза",
+            "content": "<p>Добавете пълния състав на продукта – количество на всяко активно вещество за дневна доза и процент от референтната стойност, където има такава.</p>"
           }
         },
-        "how_to_use": {
+        "usage": {
           "type": "accordion",
           "settings": {
-            "heading": "How to use",
-            "content": "<p>Take two capsules daily with food. Do not exceed the recommended dose. Food supplements should not be used as a substitute for a varied diet.</p>"
+            "heading": "Как се приема",
+            "content": "<p>По две капсули дневно с храна. Да не се превишава препоръчваната дневна доза. Да не се използва като заместител на разнообразното хранене.</p>"
           }
         },
         "delivery": {
           "type": "accordion",
           "settings": {
-            "heading": "Delivery and returns",
-            "content": "<p>Free UK delivery on orders over £50, dispatched within one working day. Not right for you? Return within 30 days for a full refund.</p>"
+            "heading": "Доставка и връщане",
+            "content": "<p>Безплатна доставка в България за поръчки над 50 €, изпращане до един работен ден. Не ви подхожда? Върнете го до 30 дни за пълно възстановяване на сумата.</p>"
           }
         }
       },
@@ -71,55 +71,62 @@
         "variant_picker",
         "buy_buttons",
         "trust_badges",
-        "supplement_facts",
-        "how_to_use",
+        "facts",
+        "usage",
         "delivery"
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "padding_block": 48
+        "image_ratio": "portrait",
+        "padding_block": 64
       }
     },
     "related": {
       "type": "featured-collection",
       "settings": {
         "color_scheme": "scheme-2",
-        "heading": "Pairs well with",
+        "heading": "Комбинира се добре с",
         "text_alignment": "center",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "columns_mobile": "1",
         "show_view_all": true,
-        "view_all_label": "View all",
-        "padding_block": 72
+        "view_all_label": "Виж всички",
+        "padding_block": 88
       }
     },
     "faq": {
       "type": "faq",
       "blocks": {
-        "when": {
+        "q1": {
           "type": "question",
           "settings": {
-            "question": "When should I take this?",
-            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+            "question": "Кога да приемам продукта?",
+            "answer": "<p>По две капсули дневно с храна. По-важна е последователността, отколкото часът – изберете момент, който няма да пропуснете.</p>"
           }
         },
-        "results": {
+        "q2": {
           "type": "question",
           "settings": {
-            "question": "How do I read the test results?",
-            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+            "question": "Как да разчета лабораторните резултати?",
+            "answer": "<p>Всяка партида има сертификат за анализ, достъпен от страницата на продукта. В него е посочено измереното количество на всяко активно вещество, както и проверките за тежки метали и микроорганизми.</p>"
           }
         }
       },
-      "block_order": ["when", "results"],
+      "block_order": [
+        "q1",
+        "q2"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
-        "heading": "Questions about this product",
-        "padding_block": 72
+        "heading": "Въпроси за този продукт",
+        "padding_block": 88
       }
     }
   },
-  "order": ["main", "related", "faq"]
+  "order": [
+    "main",
+    "related",
+    "faq"
+  ]
 }

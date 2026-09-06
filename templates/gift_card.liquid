@@ -1,7 +1,7 @@
 {%- liquid
   assign gift_card_value = gift_card.initial_value | money
   assign gift_card_balance = gift_card.balance | money
-  assign gift_card_expiry = gift_card.expires_on | date: '%d %B %Y'
+  assign gift_card_expiry = gift_card.expires_on | date: format: 'month_day_year'
 -%}
 
 <div class="section">

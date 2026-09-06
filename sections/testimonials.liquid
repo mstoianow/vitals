@@ -68,8 +68,10 @@
 
   .testimonial__quote {
     margin: 0;
-    font-size: 1.0625rem;
-    line-height: 1.55;
+    font-family: var(--font-heading-family);
+    font-style: italic;
+    font-size: 1.45rem;
+    line-height: 1.3;
   }
 
   .testimonial__meta {
@@ -83,8 +85,10 @@
 
   .testimonial__author {
     font-style: normal;
-    font-weight: 600;
-    font-size: 0.9375rem;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
   .testimonial__verified {
@@ -122,7 +126,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "What customers say"
+      "default": "Какво казват клиентите"
     },
     {
       "type": "range",
@@ -173,13 +177,13 @@
           "type": "textarea",
           "id": "quote",
           "label": "Quote",
-          "default": "The only brand I have found that publishes its actual test results. Six months in and I am not switching."
+          "default": "Единствената марка, за която открих, че публикува реалните си резултати от тестовете. Шест месеца по-късно нямам намерение да я сменям."
         },
         {
           "type": "text",
           "id": "author",
           "label": "Author",
-          "default": "Alex T."
+          "default": "Мария К."
         },
         {
           "type": "checkbox",
@@ -200,15 +204,15 @@
         {
           "type": "testimonial",
           "settings": {
-            "quote": "Magnesium that actually absorbs. Sleep improved within a fortnight and the label tells you exactly why.",
-            "author": "Priya S."
+            "quote": "Магнезий, който наистина се усвоява. Сънят ми се подобри в рамките на две седмици, а етикетът обяснява точно защо.",
+            "author": "Елена С."
           }
         },
         {
           "type": "testimonial",
           "settings": {
-            "quote": "Straightforward dosing, no filler ingredients, and delivery has been quick every single time.",
-            "author": "Daniel M."
+            "quote": "Ясно дозиране, без пълнители, а доставката всеки път е била бърза.",
+            "author": "Георги М."
           }
         }
       ]

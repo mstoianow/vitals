@@ -34,8 +34,12 @@
   {%- endif -%}
 
   {%- if target.unit_price_measurement -%}
+    {%- liquid
+      assign unit_price_value = target.unit_price | money
+      assign unit_reference = target.unit_price_measurement.reference_value | append: target.unit_price_measurement.reference_unit
+    -%}
     <span class="price__unit">
-      {{- target.unit_price | money }} / {{ target.unit_price_measurement.reference_value }}{{ target.unit_price_measurement.reference_unit -}}
+      {{- 'products.product.unit_price' | t: price: unit_price_value, unit: unit_reference -}}
     </span>
   {%- endif -%}
 </div>

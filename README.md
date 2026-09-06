@@ -1,4 +1,4 @@
-# Vitals — custom Shopify theme
+# Vitals — custom Shopify theme for Verdvna
 
 A custom Shopify theme built from scratch for a supplements brand. No Dawn fork, no
 third-party CSS or JS libraries. Everything here is theme code you own.
@@ -41,18 +41,41 @@ snippets/    reusable fragments (product-card, price, icon, pagination, meta-tag
 templates/   JSON files mapping sections onto each page type
 ```
 
-### Design system
+### Design system — Italian apothecary
+
+The look is derived from the Verdvna packaging (bottle-green glass, cream label, majolica
+band, Cormorant small caps) and from the owner's other store, Ornare, whose configuration
+this theme mirrors in spirit: serif display type, a geometric sans for everything small,
+tracked uppercase labels, hairlines instead of shadows, no rounded corners on images,
+pill buttons, and a lot of cream space.
 
 All colour, typography, spacing and corner values come from theme settings and are exposed
 as CSS custom properties in `layout/theme.liquid`. `assets/base.css` holds shared primitives
-(buttons, fields, media, product card, accordion, pagination). Section-specific CSS lives in
-each section's `{% stylesheet %}` block.
+(buttons, fields, media, product card, accordion, pagination, the `.numeral` and
+`.frame--double` utilities). Section-specific CSS lives in each section's `{% stylesheet %}`
+block. Liquid is **not** rendered inside `{% stylesheet %}` or `{% javascript %}` blocks —
+dynamic values are passed in through inline `style="--custom-property: value"` attributes.
 
-Colour is handled through Shopify colour schemes, so any section can be recoloured in the
-theme editor without touching code. Five schemes ship by default: white, warm off-white,
-deep forest, near-black, and soft sage. Note that Liquid is **not** rendered inside
-`{% stylesheet %}` or `{% javascript %}` blocks — dynamic values are passed in through
-inline `style="--custom-property: value"` attributes.
+**Type.** Headings are Cormorant (`cormorant_n4`); the Light cut is loaded as well and used
+for display sizes (`.h0`, the slideshow heading, the quotation style of Rich text). Body is
+Jost (`jost_n4`) at 16px/1.7 with 0.02em tracking. `h4`/`.h4`, eyebrows, buttons, badges,
+field labels and navigation are small tracked uppercase Jost — the "secondary line" of an
+apothecary label. Roman numerals (`.numeral`) are Cormorant semibold.
+
+**Colour.** Five schemes, all measured from the packaging: 1 paper `#FFFCF7`, 2 label cream
+`#FFF6F1`, 3 bottle green `#213D0C` with cream type (the box), 4 Ornare deep earth `#3D1F0E`,
+5 majolica-tile parchment `#F9EBD2`. Text is the brand green everywhere on light schemes;
+the accent is the brass of the jar cap `#A88551`, used for stars and hover underlines only.
+The majolica blues and ochres appear solely inside the ornament band.
+
+**Ornament band.** `sections/ornament-band.liquid` repeats a strip cut from the label
+(`assets/majolica-band.jpg`, 1800 × 89px) between sections. Replace it with the original
+artwork at a tile-period width for a seamless repeat; the crop will show a faint seam on
+very wide screens.
+
+**Numbered products.** The product card shows a Roman numeral above the title when the
+product has a `custom.numeral` metafield (single line text, e.g. `I`); the degree sign is
+added by the theme. Create the metafield definition under Settings → Custom data → Products.
 
 Anything shared between two or more sections belongs in `base.css`, not in a section
 stylesheet — section CSS is only served when that section renders on the page.
@@ -120,8 +143,12 @@ pyftsubset SourceSans3[wght].ttf --unicodes="U+0400-052F,U+1C80-1C8F,U+2DE0-2DFF
 Commerce: `main-product`, `main-collection`, `main-cart`, `main-search`, `main-page`,
 `main-blog`, `main-article`, `main-list-collections`, `main-404`, `contact-form`.
 
-Marketing: `hero`, `featured-collection`, `benefits`, `ingredients`, `testimonials`, `faq`,
-`newsletter`, `image-with-text`, `rich-text`.
+Marketing: `slideshow` (large hero carousel — fade or drift, autoplay with a pause control,
+paused on hover/focus/hidden tab and for reduced-motion visitors, keyboard and swipe, first
+slide eager, per-slide colour scheme and mobile image), `hero` (single static banner),
+`featured-collection`, `benefits`, `ingredients`, `testimonials`, `faq`, `newsletter`,
+`image-with-text` (with hairline or double-rule frame), `rich-text` (standard or ruled
+italic quotation), `ornament-band`.
 
 Global: `header`, `footer`, `announcement-bar` (wired up via `header-group.json` and
 `footer-group.json`).
@@ -132,6 +159,17 @@ its dose, built for brands that publish full formulas rather than proprietary bl
 The product page is block-based, so the order of vendor, title, price, variant picker, buy
 buttons, trust badges and collapsible rows is rearrangeable in the theme editor.
 
+### Language
+
+The storefront ships in Bulgarian. `locales/bg.json` mirrors `en.default.json` key for key
+(theme check enforces parity), every template and section-group carries Bulgarian content,
+and section schema defaults are Bulgarian so newly added sections match. Merchant-facing
+editor labels stay English. Register: polite lowercase "ви" in sentences, short singular
+imperatives on buttons ("Добави в количката", "Виж всички"), „…“ quotes, spaced en dash,
+euro pricing. Dates use the `date_formats.month_day_year` locale key. For `<html lang="bg">`,
+the Bulgarian letterforms and the Cyrillic tracking rules to activate, Bulgarian must be
+the store's published language (Settings → Languages).
+
 ## Before launch
 
 These need a real store and cannot be done from the codebase alone:
@@ -141,7 +179,12 @@ These need a real store and cannot be done from the codebase alone:
 2. **Set the collection** on the Featured collection sections (homepage and product page).
 3. **Upload a logo and favicon** in theme settings. Without a logo the shop name renders as
    text, which is a deliberate fallback rather than a placeholder.
-4. **Replace the placeholder copy.** Product benefit claims, ingredient doses, testimonials
-   and FAQ answers are all realistic filler and must be replaced with your own.
-5. **Check your market's supplement labelling rules.** Health claims on supplements are
-   regulated in most territories. Nothing in this theme has been reviewed for compliance.
+4. **Replace the placeholder copy.** The slideshow, story, ingredient doses (the °I Lumen
+   example formula), testimonials and FAQ answers are realistic filler and must be replaced
+   with your own. Upload slide images (3200 × 1800, plus optional 1100 × 1500 portrait crops)
+   in the theme editor — without images the slides show their colour scheme.
+5. **Check health-claim wording.** Supplement claims in the EU are governed by Regulation
+   (EC) 1924/2006 and the authorised list in Regulation (EU) 432/2012. The sample copy uses
+   authorised wording where a claim is made ("допринася за поддържане на нормално зрение")
+   and stays descriptive elsewhere, but nothing here has been reviewed by a regulatory
+   professional.

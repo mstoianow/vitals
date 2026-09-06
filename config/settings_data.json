@@ -3,81 +3,81 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#FFFFFF",
+          "background": "#FFFCF7",
           "background_gradient": "",
-          "text": "#1A1D1A",
-          "button": "#1A1D1A",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1D1A",
-          "border": "#E2E1D8",
-          "accent": "#2F4F3A",
-          "shadow": "#1A1D1A"
+          "text": "#213D0C",
+          "button": "#213D0C",
+          "button_label": "#FFF6F1",
+          "secondary_button_label": "#213D0C",
+          "border": "#D8D9C9",
+          "accent": "#A88551",
+          "shadow": "#213D0C"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#F7F5EF",
+          "background": "#FFF6F1",
           "background_gradient": "",
-          "text": "#1A1D1A",
-          "button": "#1A1D1A",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1D1A",
-          "border": "#E2E1D8",
-          "accent": "#2F4F3A",
-          "shadow": "#1A1D1A"
+          "text": "#213D0C",
+          "button": "#213D0C",
+          "button_label": "#FFF6F1",
+          "secondary_button_label": "#213D0C",
+          "border": "#D3D3C1",
+          "accent": "#A88551",
+          "shadow": "#213D0C"
         }
       },
       "scheme-3": {
         "settings": {
-          "background": "#2F4F3A",
+          "background": "#213D0C",
           "background_gradient": "",
-          "text": "#F7F5EF",
-          "button": "#F7F5EF",
-          "button_label": "#2F4F3A",
-          "secondary_button_label": "#F7F5EF",
-          "border": "#4A6553",
-          "accent": "#C9D8CB",
-          "shadow": "#0F1A13"
+          "text": "#FFF6F1",
+          "button": "#FFF6F1",
+          "button_label": "#213D0C",
+          "secondary_button_label": "#FFF6F1",
+          "border": "#3A5326",
+          "accent": "#C9B37E",
+          "shadow": "#0B1606"
         }
       },
       "scheme-4": {
         "settings": {
-          "background": "#1A1D1A",
+          "background": "#3D1F0E",
           "background_gradient": "",
-          "text": "#F7F5EF",
-          "button": "#F7F5EF",
-          "button_label": "#1A1D1A",
-          "secondary_button_label": "#F7F5EF",
-          "border": "#3A3E3A",
-          "accent": "#C9D8CB",
-          "shadow": "#000000"
+          "text": "#FDF8F4",
+          "button": "#FDF8F4",
+          "button_label": "#3D1F0E",
+          "secondary_button_label": "#FDF8F4",
+          "border": "#5A3A26",
+          "accent": "#E8A87C",
+          "shadow": "#1A0C05"
         }
       },
       "scheme-5": {
         "settings": {
-          "background": "#E8EDE6",
+          "background": "#F9EBD2",
           "background_gradient": "",
-          "text": "#1A1D1A",
-          "button": "#2F4F3A",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1D1A",
-          "border": "#D2DCCF",
-          "accent": "#2F4F3A",
-          "shadow": "#1A1D1A"
+          "text": "#213D0C",
+          "button": "#213D0C",
+          "button_label": "#FFF6F1",
+          "secondary_button_label": "#213D0C",
+          "border": "#E3D3B5",
+          "accent": "#AD6C2F",
+          "shadow": "#213D0C"
         }
       }
     },
-    "type_header_font": "source_sans_pro_n4",
+    "type_header_font": "cormorant_n4",
     "heading_scale": 100,
     "heading_transform": "none",
-    "type_body_font": "source_sans_pro_n4",
+    "type_body_font": "jost_n4",
     "body_scale": 100,
-    "page_width": 1320,
+    "page_width": 1400,
     "spacing_sections": 0,
     "radius_button": 40,
-    "radius_input": 8,
-    "radius_card": 12,
-    "card_image_ratio": "square",
+    "radius_input": 2,
+    "radius_card": 0,
+    "card_image_ratio": "portrait",
     "card_show_vendor": false,
     "card_show_second_image": true,
     "card_show_quick_add": true,
@@ -91,17 +91,17 @@
   },
   "presets": {
     "Default": {
-      "type_header_font": "source_sans_pro_n4",
+      "type_header_font": "cormorant_n4",
       "heading_scale": 100,
       "heading_transform": "none",
-      "type_body_font": "source_sans_pro_n4",
+      "type_body_font": "jost_n4",
       "body_scale": 100,
-      "page_width": 1320,
+      "page_width": 1400,
       "spacing_sections": 0,
       "radius_button": 40,
-      "radius_input": 8,
-      "radius_card": 12,
-      "card_image_ratio": "square",
+      "radius_input": 2,
+      "radius_card": 0,
+      "card_image_ratio": "portrait",
       "card_show_vendor": false,
       "card_show_second_image": true,
       "card_show_quick_add": true,

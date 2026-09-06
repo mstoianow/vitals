@@ -9,37 +9,45 @@
           "type": "brand",
           "settings": {
             "logo_width": 150,
-            "text": "<p>Third-party tested supplements, formulated with clinically studied doses and nothing you do not need.</p>"
+            "text": "<p>Хранителни добавки с дози от изследванията, прозрачни етикети и независимо тестване на всяка партида.</p>",
+            "brand_text": "Verdvna"
           }
         },
         "menu-shop": {
           "type": "menu",
           "settings": {
-            "heading": "Shop",
+            "heading": "Магазин",
             "menu": "footer"
           }
         },
         "menu-help": {
           "type": "menu",
           "settings": {
-            "heading": "Help",
+            "heading": "Помощ",
             "menu": "footer"
           }
         },
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "heading": "Join the list",
-            "text": "<p>Research summaries, restock alerts and subscriber-only pricing. No noise.</p>"
+            "heading": "Абонирайте се за писмата ни",
+            "text": "<p>Резюмета на изследвания, известия за наличност и цени само за абонати. Около два пъти месечно.</p>"
           }
         }
       },
-      "block_order": ["brand", "menu-shop", "menu-help", "newsletter"],
+      "block_order": [
+        "brand",
+        "menu-shop",
+        "menu-help",
+        "newsletter"
+      ],
       "settings": {
         "color_scheme": "scheme-2",
         "show_payment_icons": true
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

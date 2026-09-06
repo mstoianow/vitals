@@ -89,18 +89,18 @@
 
   .ingredients__name {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-heading-family);
+    font-size: 1.3rem;
+    font-weight: var(--font-heading-weight);
     letter-spacing: 0;
     text-transform: none;
   }
 
   .ingredients__amount {
-    font-size: 0.9375rem;
-    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     white-space: nowrap;
-    color: rgb(var(--color-accent));
-    font-weight: 600;
   }
 
   .ingredients__description {
@@ -139,25 +139,25 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "What is inside"
+      "default": "Какво съдържа"
     },
     {
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Every active, every dose"
+      "default": "Всяко активно вещество, всяка доза"
     },
     {
       "type": "richtext",
       "id": "text",
       "label": "Text",
-      "default": "<p>No proprietary blends. Here is exactly what is in each serving and why it is there.</p>"
+      "default": "<p>Без патентовани смеси. Ето какво точно съдържа всяка дневна доза и защо е там.</p>"
     },
     {
       "type": "text",
       "id": "footnote",
       "label": "Footnote",
-      "default": "Amounts shown per daily serving of two capsules."
+      "default": "Количествата са посочени за дневна доза от две капсули."
     },
     {
       "type": "range",
@@ -179,19 +179,19 @@
           "type": "text",
           "id": "name",
           "label": "Name",
-          "default": "Vitamin D3 (cholecalciferol)"
+          "default": "Витамин D3 (холекалциферол)"
         },
         {
           "type": "text",
           "id": "amount",
           "label": "Amount per serving",
-          "default": "4000 IU"
+          "default": "4000 МЕ"
         },
         {
           "type": "text",
           "id": "description",
           "label": "Description",
-          "default": "Supports normal immune function and the maintenance of bones and teeth."
+          "default": "Допринася за нормалната функция на имунната система и за поддържането на нормални кости и зъби."
         }
       ]
     }
@@ -203,25 +203,25 @@
         {
           "type": "ingredient",
           "settings": {
-            "name": "Vitamin D3 (cholecalciferol)",
-            "amount": "4000 IU",
-            "description": "Supports normal immune function and the maintenance of bones and teeth."
+            "name": "Витамин D3 (холекалциферол)",
+            "amount": "4000 МЕ",
+            "description": "Допринася за нормалната функция на имунната система и за поддържането на нормални кости и зъби."
           }
         },
         {
           "type": "ingredient",
           "settings": {
-            "name": "Magnesium bisglycinate",
-            "amount": "300 mg",
-            "description": "A highly absorbable form that supports muscle function and normal sleep."
+            "name": "Магнезиев бисглицинат",
+            "amount": "300 мг",
+            "description": "Високоусвоима форма, която допринася за нормалната мускулна функция и за нормалната функция на нервната система."
           }
         },
         {
           "type": "ingredient",
           "settings": {
-            "name": "Vitamin K2 (MK-7)",
-            "amount": "100 mcg",
-            "description": "Works alongside vitamin D to direct calcium towards bone."
+            "name": "Витамин K2 (MK-7)",
+            "amount": "100 мкг",
+            "description": "Действа заедно с витамин D и допринася за поддържането на нормални кости."
           }
         }
       ]

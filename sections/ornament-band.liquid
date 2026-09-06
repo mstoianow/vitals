@@ -1,0 +1,71 @@
+{%- liquid
+  if section.settings.image != blank
+    assign band_url = section.settings.image | image_url: width: 2000
+  else
+    assign band_url = 'majolica-band.jpg' | asset_url
+  endif
+-%}
+
+<div
+  class="ornament-band color-{{ section.settings.color_scheme }}{% if section.settings.show_rules %} ornament-band--ruled{% endif %}"
+  role="presentation"
+  style="--band-height: {{ section.settings.height }}px; --band-image: url('{{ band_url }}');"
+></div>
+
+{% stylesheet %}
+  .ornament-band {
+    height: var(--band-height, 44px);
+    background-color: rgb(var(--color-background));
+    background-image: var(--band-image);
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: auto 100%;
+  }
+
+  .ornament-band--ruled {
+    border-top: 1px solid rgb(var(--color-text));
+    border-bottom: 1px solid rgb(var(--color-text));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ornament band",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Pattern image",
+      "info": "A wide strip that repeats horizontally. Leave empty to use the majolica band from the label."
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Height",
+      "default": 44
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rules",
+      "label": "Hairline rules above and below",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ornament band"
+    }
+  ]
+}
+{% endschema %}

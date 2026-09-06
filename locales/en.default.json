@@ -44,7 +44,10 @@
     },
     "previous_slide": "Previous",
     "next_slide": "Next",
-    "star_rating": "{{ rating }} out of {{ max }} stars"
+    "star_rating": "{{ rating }} out of {{ max }} stars",
+    "account": "Account",
+    "pause_slideshow": "Pause slideshow",
+    "play_slideshow": "Play slideshow"
   },
   "products": {
     "product": {
@@ -101,13 +104,17 @@
       "announcement": "Announcement"
     },
     "footer": {
-      "payment_methods": "Payment methods we accept"
+      "payment_methods": "Payment methods we accept",
+      "copyright": "© {{ year }} {{ shop }}."
     },
     "faq": {
       "title": "Frequently asked questions"
     },
     "testimonials": {
       "verified": "Verified buyer"
+    },
+    "featured_collection": {
+      "view_all": "View all"
     }
   },
   "templates": {
@@ -130,6 +137,9 @@
       "message": "Message",
       "send": "Send message",
       "success": "Thanks for getting in touch. We will reply within one business day."
+    },
+    "list_collections": {
+      "title": "Collections"
     }
   },
   "blogs": {
@@ -213,7 +223,10 @@
       "tax": "Tax",
       "billing_address": "Billing address",
       "shipping_address": "Shipping address",
-      "back": "Back to account"
+      "back": "Back to account",
+      "sku_with_value": "SKU: {{ sku }}",
+      "shipping_with_method": "Shipping ({{ method }})",
+      "tax_with_title": "Tax ({{ title }})"
     },
     "addresses": {
       "title": "Addresses",
@@ -255,5 +268,8 @@
     "product_title": "Example product",
     "collection_title": "Example collection",
     "article_title": "Example article title"
+  },
+  "date_formats": {
+    "month_day_year": "%-d %B %Y"
   }
 }

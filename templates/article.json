@@ -6,20 +6,23 @@
         "color_scheme": "scheme-1",
         "show_date": true,
         "show_author": true,
-        "padding_block": 56
+        "padding_block": 72
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "color_scheme": "scheme-5",
-        "heading": "Join the list",
-        "text": "<p>Research summaries, restock alerts and subscriber-only pricing. Roughly once a fortnight.</p>",
-        "button_label": "Subscribe",
-        "disclaimer": "Unsubscribe any time. We never share your details.",
-        "padding_block": 72
+        "heading": "Абонирайте се за писмата ни",
+        "text": "<p>Резюмета на изследвания, известия за наличност и цени само за абонати. Около два пъти месечно.</p>",
+        "button_label": "Абонирай се",
+        "disclaimer": "Можете да се отпишете по всяко време. Не споделяме данните ви.",
+        "padding_block": 88
       }
     }
   },
-  "order": ["main", "newsletter"]
+  "order": [
+    "main",
+    "newsletter"
+  ]
 }

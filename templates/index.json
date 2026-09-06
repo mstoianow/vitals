@@ -1,19 +1,71 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "brand": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 15,
+            "color_scheme": "scheme-3",
+            "eyebrow": "В духа на италианските аптеки · Формули с доказани дози",
+            "heading": "Всичко, от което се нуждаете. <em>Нищо излишно.</em>",
+            "text": "<p>Клинично изследвани дози, прозрачни етикети и резултати от независима лаборатория за всяка партида.</p>",
+            "button_label": "Разгледай продуктите",
+            "button_link": "shopify://collections/all",
+            "button_2_label": "Нашият стандарт",
+            "content_position": "left",
+            "vertical_position": "middle",
+            "text_alignment": "left"
+          }
+        },
+        "lumen": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 10,
+            "color_scheme": "scheme-5",
+            "eyebrow": "°I · Lumen",
+            "heading": "За очите, които гледат екрани по цял ден.",
+            "text": "<p>Лутеин, зеаксантин и боровинка – в дозите от изследванията, не от ценовата листа.</p>",
+            "button_label": "Виж Lumen",
+            "button_link": "shopify://collections/all",
+            "button_2_label": "",
+            "content_position": "left",
+            "vertical_position": "middle",
+            "text_alignment": "left"
+          }
+        },
+        "praesidium": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 10,
+            "color_scheme": "scheme-2",
+            "eyebrow": "°II · Praesidium",
+            "heading": "Имунитетът обича постоянството.",
+            "text": "<p>Витамин C, D3, цинк и бъз – всеки ден, в две капсули.</p>",
+            "button_label": "Виж Praesidium",
+            "button_link": "shopify://collections/all",
+            "button_2_label": "",
+            "content_position": "left",
+            "vertical_position": "middle",
+            "text_alignment": "left"
+          }
+        }
+      },
+      "block_order": [
+        "brand",
+        "lumen",
+        "praesidium"
+      ],
       "settings": {
         "height": "large",
-        "overlay_opacity": 35,
-        "color_scheme": "scheme-4",
-        "eyebrow": "Third-party tested",
-        "heading": "Everything you need. Nothing you do not.",
-        "text": "<p>Clinically studied doses, transparent labels and batch-level test results you can actually read.</p>",
-        "content_width": 620,
-        "content_position": "left",
-        "text_alignment": "left",
-        "button_label": "Shop the range",
-        "button_2_label": "See the test results"
+        "transition": "fade",
+        "autoplay": true,
+        "autoplay_speed": 7,
+        "show_arrows": true,
+        "show_dots": true,
+        "content_width": 680,
+        "accessibility_label": "Слайдшоу"
       }
     },
     "benefits": {
@@ -23,47 +75,60 @@
           "type": "benefit",
           "settings": {
             "icon": "beaker",
-            "heading": "Third-party tested",
-            "text": "<p>Every batch independently tested for purity and potency, with results published openly.</p>"
+            "heading": "Тествано от независима лаборатория",
+            "text": "<p>Всяка партида се изследва за чистота и съдържание на активните вещества. Сертификатът за анализ е публикуван на страницата на продукта.</p>"
           }
         },
         "dosed": {
           "type": "benefit",
           "settings": {
             "icon": "shield-check",
-            "heading": "Clinically studied doses",
-            "text": "<p>We dose to the research, not to the cost sheet. No proprietary blends, no fairy dust.</p>"
+            "heading": "Дози от изследванията",
+            "text": "<p>Дозираме според публикуваните проучвания, а не според себестойността. Без „патентовани смеси“ и без пълнители.</p>"
           }
         },
         "clean": {
           "type": "benefit",
           "settings": {
             "icon": "leaf",
-            "heading": "Clean formulations",
-            "text": "<p>Vegan, allergen free and made without artificial colours, sweeteners or fillers.</p>"
+            "heading": "Чисти формули",
+            "text": "<p>Веган, без алергени, без изкуствени оцветители и подсладители.</p>"
           }
         }
       },
-      "block_order": ["tested", "dosed", "clean"],
+      "block_order": [
+        "tested",
+        "dosed",
+        "clean"
+      ],
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
         "layout": "stacked",
-        "padding_block": 56
+        "padding_block": 80
       }
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
         "color_scheme": "scheme-1",
-        "eyebrow": "Start here",
-        "heading": "Best sellers",
+        "eyebrow": "Гамата",
+        "heading": "Всеки продукт с номер и предназначение",
+        "text": "<p>Малка, номерирана серия. Всяка формула решава една задача – докрай.</p>",
         "text_alignment": "center",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "columns_mobile": "1",
         "show_view_all": true,
-        "view_all_label": "View all",
-        "padding_block": 72
+        "view_all_label": "Виж всички",
+        "padding_block": 88
+      }
+    },
+    "band": {
+      "type": "ornament-band",
+      "settings": {
+        "height": 44,
+        "show_rules": true,
+        "color_scheme": "scheme-2"
       }
     },
     "story": {
@@ -71,57 +136,85 @@
       "settings": {
         "color_scheme": "scheme-1",
         "image_position": "left",
-        "image_ratio": "landscape",
-        "eyebrow": "Why we exist",
-        "heading": "Made for people who read the label",
-        "text": "<p>We started because the supplements aisle is full of underdosed formulas hiding behind proprietary blends. Every product we make lists its actives in full, at doses backed by published research, and every batch is tested by an independent lab before it ships.</p>",
-        "button_label": "Read our standard",
-        "padding_block": 72
+        "image_ratio": "portrait",
+        "frame": "double",
+        "eyebrow": "Защо съществуваме",
+        "heading": "За хората, които четат етикета",
+        "text": "<p>Verdvna се роди от една проста констатация: рафтът с хранителни добавки е пълен със занижени дози, скрити зад „патентовани смеси“. Затова всяка наша формула изброява активните вещества докрай, в количества, подкрепени от публикувани изследвания, и всяка партида се тества от независима лаборатория, преди да стигне до вас.</p><p>Вдъхновени сме от старите италиански аптеки – от спокойствието на майоликовите буркани и от навика всичко да се изписва ясно.</p>",
+        "button_label": "Нашият стандарт",
+        "padding_block": 96
       }
     },
     "ingredients": {
       "type": "ingredients",
       "blocks": {
-        "d3": {
+        "lutein": {
           "type": "ingredient",
           "settings": {
-            "name": "Vitamin D3 (cholecalciferol)",
-            "amount": "4000 IU",
-            "description": "Supports normal immune function and the maintenance of bones and teeth."
+            "name": "Лутеин (от невен)",
+            "amount": "10 мг",
+            "description": "Каротеноид, който се съдържа естествено в макулата на окото."
           }
         },
-        "magnesium": {
+        "zeaxanthin": {
           "type": "ingredient",
           "settings": {
-            "name": "Magnesium bisglycinate",
-            "amount": "300 mg",
-            "description": "A highly absorbable form that supports muscle function and normal sleep."
+            "name": "Зеаксантин",
+            "amount": "2 мг",
+            "description": "Придружава лутеина в съотношението, в което се среща в макулата."
           }
         },
-        "k2": {
+        "bilberry": {
           "type": "ingredient",
           "settings": {
-            "name": "Vitamin K2 (MK-7)",
-            "amount": "100 mcg",
-            "description": "Works alongside vitamin D to direct calcium towards bone."
+            "name": "Екстракт от боровинка (36 % антоцианозиди)",
+            "amount": "100 мг",
+            "description": "Стандартизиран екстракт с традиционна употреба за очите."
+          }
+        },
+        "b2": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Рибофлавин (витамин B2)",
+            "amount": "1,4 мг",
+            "description": "Допринася за поддържане на нормално зрение.*"
           }
         },
         "zinc": {
           "type": "ingredient",
           "settings": {
-            "name": "Zinc bisglycinate",
-            "amount": "15 mg",
-            "description": "Contributes to normal immune function and protection of cells from oxidative stress."
+            "name": "Цинк (бисглицинат)",
+            "amount": "10 мг",
+            "description": "Допринася за поддържане на нормално зрение.*"
           }
         }
       },
-      "block_order": ["d3", "magnesium", "k2", "zinc"],
+      "block_order": [
+        "lutein",
+        "zeaxanthin",
+        "bilberry",
+        "b2",
+        "zinc"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "eyebrow": "Какво има вътре",
+        "heading": "°I Lumen – всяко активно вещество, всяка доза",
+        "text": "<p>Без патентовани смеси. Ето точно какво съдържа дневната доза и защо е там.</p>",
+        "footnote": "Количества за дневна доза от две капсули. Примерен състав – заменете с данните от етикета. * Одобрена здравна претенция съгласно Регламент (ЕС) № 432/2012.",
+        "padding_block": 96
+      }
+    },
+    "credo": {
+      "type": "rich-text",
       "settings": {
         "color_scheme": "scheme-1",
-        "eyebrow": "What is inside",
-        "heading": "Every active, every dose",
-        "text": "<p>No proprietary blends. Here is exactly what is in each serving and why it is there.</p>",
-        "footnote": "Amounts shown per daily serving of two capsules.",
+        "eyebrow": "",
+        "heading": "",
+        "text": "<p>Ако не можем да ви покажем доказателството, не го продаваме.</p>",
+        "style": "quote",
+        "text_alignment": "center",
+        "button_label": "",
         "padding_block": 72
       }
     },
@@ -132,8 +225,8 @@
           "type": "testimonial",
           "settings": {
             "rating": "5",
-            "quote": "The only brand I have found that publishes its actual test results. Six months in and I am not switching.",
-            "author": "Alex T.",
+            "quote": "Единствената марка, която публикува реалните си лабораторни резултати. Шест месеца по-късно не смятам да сменям.",
+            "author": "Мария К.",
             "verified": true
           }
         },
@@ -141,8 +234,8 @@
           "type": "testimonial",
           "settings": {
             "rating": "5",
-            "quote": "Magnesium that actually absorbs. Sleep improved within a fortnight and the label tells you exactly why.",
-            "author": "Priya S.",
+            "quote": "Магнезий, който наистина се усвоява. Сънят се подобри за две седмици, а етикетът обяснява точно защо.",
+            "author": "Георги П.",
             "verified": true
           }
         },
@@ -150,78 +243,89 @@
           "type": "testimonial",
           "settings": {
             "rating": "5",
-            "quote": "Straightforward dosing, no filler ingredients, and delivery has been quick every single time.",
-            "author": "Daniel M.",
+            "quote": "Ясни дози, без пълнители, а доставката винаги е била бърза.",
+            "author": "Елена Д.",
             "verified": true
           }
         }
       },
-      "block_order": ["one", "two", "three"],
+      "block_order": [
+        "one",
+        "two",
+        "three"
+      ],
       "settings": {
-        "color_scheme": "scheme-2",
-        "eyebrow": "Reviews",
-        "heading": "What customers say",
+        "color_scheme": "scheme-1",
+        "eyebrow": "Отзиви",
+        "heading": "Какво казват клиентите",
         "columns_desktop": 3,
-        "padding_block": 72
+        "padding_block": 88
       }
     },
     "faq": {
       "type": "faq",
       "blocks": {
-        "when": {
+        "q1": {
           "type": "question",
           "settings": {
-            "question": "When should I take this?",
-            "answer": "<p>Take two capsules daily with food. Consistency matters more than timing, so pick a moment you will remember.</p>"
+            "question": "Кога да приемам продукта?",
+            "answer": "<p>По две капсули дневно с храна. По-важна е последователността, отколкото часът – изберете момент, който няма да пропуснете.</p>"
           }
         },
-        "results": {
+        "q2": {
           "type": "question",
           "settings": {
-            "question": "How do I read the test results?",
-            "answer": "<p>Every batch has a certificate of analysis linked on its product page, showing the tested amount of each active alongside heavy metal and microbial screening.</p>"
+            "question": "Как да разчета лабораторните резултати?",
+            "answer": "<p>Всяка партида има сертификат за анализ, достъпен от страницата на продукта. В него е посочено измереното количество на всяко активно вещество, както и проверките за тежки метали и микроорганизми.</p>"
           }
         },
-        "stacking": {
+        "q3": {
           "type": "question",
           "settings": {
-            "question": "Can I take more than one product together?",
-            "answer": "<p>Yes. The range is designed to stack without overlapping doses. If you take prescription medication, speak to your GP or pharmacist first.</p>"
+            "question": "Мога ли да комбинирам няколко продукта?",
+            "answer": "<p>Да. Серията е проектирана така, че дозите да не се припокриват. Ако приемате лекарства, посъветвайте се с лекар или фармацевт.</p>"
           }
         },
-        "returns": {
+        "q4": {
           "type": "question",
           "settings": {
-            "question": "What is your returns policy?",
-            "answer": "<p>If it is not right for you, contact us within 30 days for a full refund, opened or not.</p>"
+            "question": "Какви са условията за връщане?",
+            "answer": "<p>Ако продуктът не ви подхожда, свържете се с нас до 30 дни за пълно възстановяване на сумата – дори опаковката да е отворена.</p>"
           }
         }
       },
-      "block_order": ["when", "results", "stacking", "returns"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
-        "heading": "Frequently asked questions",
-        "padding_block": 72
+        "heading": "Често задавани въпроси",
+        "padding_block": 88
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "color_scheme": "scheme-5",
-        "heading": "Join the list",
-        "text": "<p>Research summaries, restock alerts and subscriber-only pricing. Roughly once a fortnight.</p>",
-        "button_label": "Subscribe",
-        "disclaimer": "Unsubscribe any time. We never share your details.",
-        "padding_block": 80
+        "heading": "Абонирайте се за писмата ни",
+        "text": "<p>Резюмета на изследвания, известия за наличност и цени само за абонати. Около два пъти месечно.</p>",
+        "button_label": "Абонирай се",
+        "disclaimer": "Можете да се отпишете по всяко време. Не споделяме данните ви.",
+        "padding_block": 88
       }
     }
   },
   "order": [
-    "hero",
+    "slideshow",
     "benefits",
     "featured",
+    "band",
     "story",
     "ingredients",
+    "credo",
     "testimonials",
     "faq",
     "newsletter"

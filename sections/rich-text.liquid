@@ -1,6 +1,6 @@
 <div class="section color-{{ section.settings.color_scheme }}" style="--section-padding-block: {{ section.settings.padding_block }}px;">
   <div class="page-width">
-    <div class="rich-text rich-text--{{ section.settings.text_alignment }}">
+    <div class="rich-text rich-text--{{ section.settings.text_alignment }} rich-text--style-{{ section.settings.style }}">
       {%- if section.settings.eyebrow != blank -%}
         <span class="eyebrow">{{ section.settings.eyebrow }}</span>
       {%- endif -%}
@@ -41,6 +41,22 @@
   .rich-text__buttons {
     margin-top: 0.5rem;
   }
+
+  .rich-text--style-quote {
+    max-width: 52ch;
+    padding-block: 2.5rem;
+    border-top: 1px solid rgb(var(--color-text));
+    border-bottom: 1px solid rgb(var(--color-text));
+  }
+
+  .rich-text--style-quote .rte {
+    font-family: var(--font-heading-family);
+    font-style: italic;
+    font-weight: var(--font-heading-weight-light, var(--font-heading-weight));
+    font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.5rem);
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -63,13 +79,23 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Our standard"
+      "default": "Нашият стандарт"
     },
     {
       "type": "richtext",
       "id": "text",
       "label": "Text",
-      "default": "<p>Full transparency on dose, source and testing. If we cannot show you the evidence, we do not sell it.</p>"
+      "default": "<p>Пълна прозрачност за дозата, произхода и тестовете. Ако не можем да ви покажем доказателствата, не го продаваме.</p>"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "standard", "label": "Standard" },
+        { "value": "quote", "label": "Quotation (italic serif, ruled)" }
+      ],
+      "default": "standard"
     },
     {
       "type": "select",
