@@ -81,12 +81,30 @@
               <div class="slideshow__text rte">{{ slide.text }}</div>
             {%- endif -%}
             {%- if slide.button_label != blank or slide.button_2_label != blank -%}
+              {%- liquid
+                case slide.button_style_1
+                  when 'outline'
+                    assign button_1_class = 'button button--secondary'
+                  when 'link'
+                    assign button_1_class = 'button button--link'
+                  else
+                    assign button_1_class = 'button button--primary'
+                endcase
+                case slide.button_style_2
+                  when 'solid'
+                    assign button_2_class = 'button button--primary'
+                  when 'outline'
+                    assign button_2_class = 'button button--secondary'
+                  else
+                    assign button_2_class = 'button button--link'
+                endcase
+              -%}
               <div class="slideshow__buttons">
                 {%- if slide.button_label != blank -%}
-                  <a href="{{ slide.button_link }}" class="button button--primary">{{ slide.button_label | escape }}</a>
+                  <a href="{{ slide.button_link }}" class="{{ button_1_class }}">{{ slide.button_label | escape }}</a>
                 {%- endif -%}
                 {%- if slide.button_2_label != blank -%}
-                  <a href="{{ slide.button_2_link }}" class="button button--secondary">{{ slide.button_2_label | escape }}</a>
+                  <a href="{{ slide.button_2_link }}" class="{{ button_2_class }}">{{ slide.button_2_label | escape }}</a>
                 {%- endif -%}
               </div>
             {%- endif -%}
@@ -102,6 +120,10 @@
         <button type="button" class="slideshow__arrow slideshow__arrow--prev" data-slideshow-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
           {% render 'icon', name: 'chevron-left', size: 20 %}
         </button>
+      {%- endif -%}
+
+      {%- if section.settings.show_counter -%}
+        <span class="slideshow__counter" aria-hidden="true"><span data-slideshow-current>1</span><span class="slideshow__counter-sep">/</span>{{ slide_count }}</span>
       {%- endif -%}
 
       {%- if section.settings.show_dots -%}
@@ -299,6 +321,33 @@
   .slideshow__toggle[aria-pressed='true'] .slideshow__toggle-icon--pause { display: none; }
   .slideshow__toggle[aria-pressed='true'] .slideshow__toggle-icon--play { display: inline-flex; }
 
+  .slideshow__counter {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding-inline: 0.5rem;
+    font-family: var(--font-heading-family);
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .slideshow__counter-sep {
+    opacity: 0.5;
+  }
+
+  .slideshow__buttons .button--link {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* When the header is transparent over this hero, keep the content clear of it */
+  .has-hero-first .slideshow__inner {
+    padding-top: calc(5rem + var(--header-height, 0px));
+  }
+
   .slideshow__dots {
     display: flex;
     gap: 0.6rem;
@@ -325,8 +374,8 @@
   }
 
   @media screen and (max-width: 749px) {
-    .slideshow--large .slideshow__slide,
-    .slideshow--full .slideshow__slide { min-height: 78svh; }
+    .slideshow--large .slideshow__slide { min-height: 78svh; }
+    .slideshow--full .slideshow__slide { min-height: 80svh; }
 
     .slideshow__inner {
       padding-block: 3.5rem 5.5rem;
@@ -429,6 +478,8 @@
         dot.classList.toggle('is-active', i === next);
         dot.setAttribute('aria-selected', String(i === next));
       });
+      const counter = this.root.querySelector('[data-slideshow-current]');
+      if (counter) counter.textContent = String(next + 1);
 
       const controls = this.root.querySelector('[data-slideshow-controls]');
       if (controls) {
@@ -470,13 +521,24 @@
     }
   }
 
+  function markHeroFirst() {
+    const main = document.getElementById('MainContent');
+    const first = main ? main.firstElementChild : null;
+    const isHero = Boolean(first && first.querySelector(':scope > [data-slideshow]'));
+    document.body.classList.toggle('has-hero-first', isHero);
+  }
+
   function initSlideshows() {
     document.querySelectorAll('[data-slideshow]').forEach((root) => {
       if (root.dataset.slideshowReady === 'true') return;
       root.dataset.slideshowReady = 'true';
       root.slideshow = new Slideshow(root);
     });
+    markHeroFirst();
   }
+
+  document.addEventListener('shopify:section:reorder', markHeroFirst);
+  document.addEventListener('shopify:section:unload', () => window.setTimeout(markHeroFirst, 0));
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSlideshows);
@@ -548,7 +610,14 @@
       "type": "checkbox",
       "id": "show_dots",
       "label": "Show dots",
-      "default": true
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_counter",
+      "label": "Show slide counter",
+      "default": true,
+      "info": "A \"1 / 3\" counter between the arrows."
     },
     {
       "type": "range",
@@ -583,8 +652,10 @@
         { "type": "richtext", "id": "text", "label": "Text" },
         { "type": "text", "id": "button_label", "label": "Primary button label" },
         { "type": "url", "id": "button_link", "label": "Primary button link" },
+        { "type": "select", "id": "button_style_1", "label": "Primary button style", "options": [ { "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "link", "label": "Text link" } ], "default": "solid" },
         { "type": "text", "id": "button_2_label", "label": "Secondary button label" },
         { "type": "url", "id": "button_2_link", "label": "Secondary button link" },
+        { "type": "select", "id": "button_style_2", "label": "Secondary button style", "options": [ { "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "link", "label": "Text link" } ], "default": "link" },
         { "type": "header", "content": "Layout" },
         { "type": "select", "id": "content_position", "label": "Content position", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" } ], "default": "left" },
         { "type": "select", "id": "vertical_position", "label": "Vertical position", "options": [ { "value": "top", "label": "Top" }, { "value": "middle", "label": "Middle" }, { "value": "bottom", "label": "Bottom" } ], "default": "middle" },

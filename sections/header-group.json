@@ -37,7 +37,8 @@
         "show_search": true,
         "show_account": true,
         "padding_block": 22,
-        "logo_text": "Verdvna"
+        "logo_text": "Verdvna",
+        "transparent_home": true
       }
     }
   },

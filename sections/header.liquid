@@ -10,7 +10,8 @@
 -%}
 
 <header
-  class="{{ header_classes }}"
+  class="{{ header_classes }}{% if section.settings.transparent_home and template.name == 'index' %} header--transparent{% endif %}"
+  data-header
   style="--logo-width: {{ section.settings.logo_width }}px; --header-padding: {{ section.settings.padding_block }}px;"
 >
   <div class="page-width header__inner">
@@ -153,9 +154,38 @@
     color: rgb(var(--color-text));
   }
 
-  .header--sticky {
+  /* Stick the section wrapper, not the header itself — a sticky element cannot
+     stick beyond its own containing block, and the wrapper is exactly header-height */
+  .shopify-section--header:has(.header--sticky) {
     position: sticky;
     top: 0;
+    z-index: 10;
+  }
+
+  /* Transparent over the homepage hero (set by the slideshow's script), solid once scrolled */
+  .header--transparent {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  body.has-hero-first .shopify-section--header {
+    margin-bottom: calc(-1 * var(--header-height, 0px));
+  }
+
+  body.has-hero-first .header--transparent:not(.is-scrolled) {
+    background: transparent;
+    border-bottom-color: transparent;
+    color: rgb(var(--color-background));
+  }
+
+  body.has-hero-first .header--transparent:not(.is-scrolled) .header__cart-count {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-text));
+  }
+
+  body.has-hero-first .header--transparent:not(.is-scrolled) .header__search-panel,
+  body.has-hero-first .header--transparent:not(.is-scrolled) .header__drawer-panel,
+  body.has-hero-first .header--transparent:not(.is-scrolled) .header__dropdown {
+    color: rgb(var(--color-text));
   }
 
   .header--bordered {
@@ -413,6 +443,34 @@
   }
 {% endstylesheet %}
 
+{% javascript %}
+  function initHeader() {
+    const header = document.querySelector('[data-header]');
+    if (!header || header.dataset.headerReady === 'true') return;
+    header.dataset.headerReady = 'true';
+
+    const setHeight = () => {
+      document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px');
+    };
+    const onScroll = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+
+    setHeight();
+    onScroll();
+    window.addEventListener('resize', setHeight);
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    initHeader();
+  }
+
+  document.addEventListener('shopify:section:load', initHeader);
+{% endjavascript %}
+
 {% schema %}
 {
   "name": "Header",
@@ -463,6 +521,13 @@
       "id": "show_border",
       "label": "Show bottom border",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_home",
+      "label": "Transparent over the homepage hero",
+      "default": true,
+      "info": "On the home page, when the first section is a slideshow, the header sits over the first slide in light type and turns solid on scroll. Give that slide a dark image or a dark colour scheme."
     },
     {
       "type": "checkbox",

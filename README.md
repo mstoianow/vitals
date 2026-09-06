@@ -143,15 +143,21 @@ pyftsubset SourceSans3[wght].ttf --unicodes="U+0400-052F,U+1C80-1C8F,U+2DE0-2DFF
 Commerce: `main-product`, `main-collection`, `main-cart`, `main-search`, `main-page`,
 `main-blog`, `main-article`, `main-list-collections`, `main-404`, `contact-form`.
 
-Marketing: `slideshow` (large hero carousel — fade or drift, autoplay with a pause control,
-paused on hover/focus/hidden tab and for reduced-motion visitors, keyboard and swipe, first
-slide eager, per-slide colour scheme and mobile image), `hero` (single static banner),
+Marketing: `slideshow` (hero carousel modelled on Ornare's — full-viewport height, arrows
+with a "1 / 3" counter, per-slide content position and colour scheme, solid / outline /
+text-link CTAs, mobile image; fade or drift, autoplay with a pause control, paused on
+hover/focus/hidden tab and for reduced-motion visitors, keyboard and swipe, first slide
+eager), `hero` (single static banner),
 `featured-collection`, `benefits`, `ingredients`, `testimonials`, `faq`, `newsletter`,
 `image-with-text` (with hairline or double-rule frame), `rich-text` (standard or ruled
 italic quotation), `ornament-band`.
 
 Global: `header`, `footer`, `announcement-bar` (wired up via `header-group.json` and
-`footer-group.json`).
+`footer-group.json`). On the home page, when the first section is a slideshow, the header
+sits transparent over the first slide in light type and turns solid once scrolled (the
+"Transparent over the homepage hero" setting) — so give that slide a dark image or a dark
+colour scheme. Stickiness is applied to Shopify's section wrapper via `:has()`, because a
+sticky element cannot stick beyond its own container.
 
 `ingredients` is the supplements-specific one — a per-serving breakdown of each active with
 its dose, built for brands that publish full formulas rather than proprietary blends.

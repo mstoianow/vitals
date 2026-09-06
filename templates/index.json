@@ -6,7 +6,7 @@
         "brand": {
           "type": "slide",
           "settings": {
-            "overlay_opacity": 15,
+            "overlay_opacity": 45,
             "color_scheme": "scheme-3",
             "eyebrow": "В духа на италианските аптеки · Формули с доказани дози",
             "heading": "Всичко, от което се нуждаете. <em>Нищо излишно.</em>",
@@ -15,31 +15,34 @@
             "button_link": "shopify://collections/all",
             "button_2_label": "Нашият стандарт",
             "content_position": "left",
-            "vertical_position": "middle",
-            "text_alignment": "left"
+            "vertical_position": "bottom",
+            "text_alignment": "left",
+            "button_style_1": "solid",
+            "button_style_2": "link"
           }
         },
         "lumen": {
           "type": "slide",
           "settings": {
-            "overlay_opacity": 10,
-            "color_scheme": "scheme-5",
+            "overlay_opacity": 45,
+            "color_scheme": "scheme-3",
             "eyebrow": "°I · Lumen",
             "heading": "За очите, които гледат екрани по цял ден.",
             "text": "<p>Лутеин, зеаксантин и боровинка – в дозите от изследванията, не от ценовата листа.</p>",
             "button_label": "Виж Lumen",
             "button_link": "shopify://collections/all",
             "button_2_label": "",
-            "content_position": "left",
-            "vertical_position": "middle",
-            "text_alignment": "left"
+            "content_position": "right",
+            "vertical_position": "bottom",
+            "text_alignment": "right",
+            "button_style_1": "link"
           }
         },
         "praesidium": {
           "type": "slide",
           "settings": {
-            "overlay_opacity": 10,
-            "color_scheme": "scheme-2",
+            "overlay_opacity": 40,
+            "color_scheme": "scheme-3",
             "eyebrow": "°II · Praesidium",
             "heading": "Имунитетът обича постоянството.",
             "text": "<p>Витамин C, D3, цинк и бъз – всеки ден, в две капсули.</p>",
@@ -47,8 +50,9 @@
             "button_link": "shopify://collections/all",
             "button_2_label": "",
             "content_position": "left",
-            "vertical_position": "middle",
-            "text_alignment": "left"
+            "vertical_position": "top",
+            "text_alignment": "left",
+            "button_style_1": "link"
           }
         }
       },
@@ -58,14 +62,15 @@
         "praesidium"
       ],
       "settings": {
-        "height": "large",
+        "height": "full",
         "transition": "fade",
         "autoplay": true,
         "autoplay_speed": 7,
         "show_arrows": true,
-        "show_dots": true,
+        "show_dots": false,
         "content_width": 680,
-        "accessibility_label": "Слайдшоу"
+        "accessibility_label": "Слайдшоу",
+        "show_counter": true
       }
     },
     "benefits": {
